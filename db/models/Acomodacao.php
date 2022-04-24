@@ -12,7 +12,7 @@ class Acomodacao
     private $complemento;
 
     //Querys
-    const WHERE = 'SELECT * FROM acomodacao WHERE'; // adicionar forma de indicar colunas especificas pro select
+    const WHERE  = 'FROM acomodacao WHERE'; // adicionar forma de indicar colunas especificas pro select
     const INSERT = 'INSERT INTO acomodacao';
     const DELETE = 'DELETE FROM acomodacao WHERE';
     const UPDATE = 'UPDATE acomodacao';
@@ -78,15 +78,15 @@ class Acomodacao
         return Acomodacao::INSERT . `($columnsFormat)` . 'VALUES' . `($valuesFormat)`;
     }
 
-    public function whereQuery(string $column, string $operator, string $value)
+    public function whereQuery(string $column, string $operator, string $value, $selectColumns = 'SELECT *')
     {
-        return Acomodacao::WHERE . $column . $operator . $value;
+        return $selectColumns . Acomodacao::WHERE . $column . $operator . $value;
     }
 
     public function updateQuery(string $setColumn, string $whereColumn, string $setValue, string $whereValue)
     {
 
-        return Acomodacao::UPDATE . 'SET' . $setColumn . '=' . $setValue . $this->whereQuery($whereColumn, '=', $whereColumn);
+        return Acomodacao::UPDATE . 'SET' . $setColumn . '=' . $setValue . 'FROM acomodacao WHERE' . $whereColumn . '=' . $whereValue;
     }
 
     public function deleteQuery(string $column, string $operator, string $value)
