@@ -25,7 +25,6 @@ class Acomodacao
         $this->cidade = $cidade;
         $this->estado = $estado;
         $this->pais = $pais;
-        $this->estado = $estado;
         $this->complemento = $complemento;
         $this->diaria = $diaria;
     }
