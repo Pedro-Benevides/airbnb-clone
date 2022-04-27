@@ -1,7 +1,4 @@
 <?php
-
-namespace app\models;
-
 class Acomodacao
 {
     //Table Atributes
@@ -72,36 +69,27 @@ class Acomodacao
         return $this->pais;
     }
 
-    public function selectQuery($selectColumns = 'SELECT *')
-    {
-        return $selectColumns;
-    }
-
     public function insertQuery(array $columns, array $values)
     {
         $columnsFormat = implode(', ', $columns);
         $valuesFormat = implode(', ', $values);
 
-        return Usuario::INSERT . `($columnsFormat)` . 'VALUES' . `($valuesFormat)`;
+        return Acomodacao::INSERT . `($columnsFormat)` . 'VALUES' . `($valuesFormat)`;
     }
 
-    public function whereQuery(string $column, string $operator, string $value, string $logicOperator = "")
+    public function whereQuery(string $column, string $operator, string $value, $selectColumns = 'SELECT *')
     {
-        return $logicOperator . Usuario::WHERE . $column . $operator . $value;
-    }
-
-    public function searchQuery(string $column, string $operator, string $value, $selectColumns = 'SELECT *')
-    {
-        return $this->selectQuery($selectColumns) . $this->whereQuery($column, $operator, $value);
+        return $selectColumns . Acomodacao::WHERE . $column . $operator . $value;
     }
 
     public function updateQuery(string $setColumn, string $whereColumn, string $setValue, string $whereValue)
     {
-        return Usuario::UPDATE . 'SET' . $setColumn . '=' . $setValue .  $this->whereQuery($whereColumn, '=', $whereValue);
+
+        return Acomodacao::UPDATE . 'SET' . $setColumn . '=' . $setValue . 'FROM acomodacao WHERE' . $whereColumn . '=' . $whereValue;
     }
 
     public function deleteQuery(string $column, string $operator, string $value)
     {
-        return Usuario::DELETE . $this->whereQuery($column, $operator, $value);
+        return Acomodacao::DELETE . $column . $operator . $value;
     }
 }
