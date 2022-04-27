@@ -5,6 +5,7 @@ namespace app\models;
 class Usuario
 {
     //Table Atributes
+    private $logged;
     private $nome;
     private $cpf;
     private $email;
@@ -15,14 +16,17 @@ class Usuario
     private $locatario;
     private $senha;
 
-    //Querys
-    const WHERE  = 'FROM usuario WHERE'; // adicionar forma de indicar colunas especificas pro select
-    const INSERT = 'INSERT INTO usuario';
-    const DELETE = 'DELETE FROM usuario WHERE';
-    const UPDATE = 'UPDATE usuario';
-
-    function __construct(string $nome, string $cpf, string $email, string $pais, string $senha, $telefone = null, string $cartaoId = null, string $anfitriao = null, string $locatario = null)
-    {
+    function __construct(
+        string $nome,
+        string $cpf,
+        string $email,
+        string $senha,
+        string $pais,
+        string $telefone = null,
+        string $cartaoId = null,
+        string $anfitriao = null,
+        string $locatario = null
+    ) {
         $this->nome = $nome;
         $this->cpf = $cpf;
         $this->email = $email;
@@ -72,38 +76,5 @@ class Usuario
     public function getPais()
     {
         return $this->pais;
-    }
-
-    public function selectQuery($selectColumns = 'SELECT *')
-    {
-        return $selectColumns;
-    }
-
-    public function insertQuery(array $columns, array $values)
-    {
-        $columnsFormat = implode(', ', $columns);
-        $valuesFormat = implode(', ', $values);
-
-        return Usuario::INSERT . `($columnsFormat)` . 'VALUES' . `($valuesFormat)`;
-    }
-
-    public function whereQuery(string $column, string $operator, string $value, string $logicOperator = "")
-    {
-        return $logicOperator . Usuario::WHERE . $column . $operator . $value;
-    }
-
-    public function searchQuery(string $column, string $operator, string $value, $selectColumns = 'SELECT *')
-    {
-        return $this->selectQuery($selectColumns) . $this->whereQuery($column, $operator, $value);
-    }
-
-    public function updateQuery(string $setColumn, string $whereColumn, string $setValue, string $whereValue)
-    {
-        return Usuario::UPDATE . 'SET' . $setColumn . '=' . $setValue .  $this->whereQuery($whereColumn, '=', $whereValue);
-    }
-
-    public function deleteQuery(string $column, string $operator, string $value)
-    {
-        return Usuario::DELETE . $this->whereQuery($column, $operator, $value);
     }
 }
