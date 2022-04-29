@@ -1,13 +1,19 @@
 <?php
-// $servername = getenv("DB_SERVER_NAME");
-// $username = getenv("DB_USER");
-// $password = getenv("DB_PASSWORD");
+session_start();
 
 // Create connection
-$conn = new mysqli(getenv("DB_HOSTNAME"), getenv("DB_USER"), getenv("DB_PASSWORD"));
+$conn = new mysqli(
+    $_SESSION["DB_HOSTNAME"],
+    $_SESSION["DB_USER"],
+    null,
+    $_SESSION["DB_DATABASE"],
+    $_SESSION["DB_PORT"]
+);
 
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
+} else {
+    echo "Connected successfully";
+    header("Location: ..\..\app\Views\pages\login.php");
 }
-echo "Connected successfully";
