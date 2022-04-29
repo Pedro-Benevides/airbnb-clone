@@ -22,14 +22,14 @@
         <div class="shape"></div>
         <div class="shape"></div>
     </div>
-    <form action="" method="POST">
+    <form action="index.php" method="POST">
         <h3>Login Here</h3>
 
         <label for="email">Email></label>
-        <input type="email" placeholder="Email" id="email">
+        <input type="email" placeholder="Email" id="email" name="email">
 
         <label for="password">Password</label>
-        <input type="password" placeholder="Password" id="password">
+        <input type="password" placeholder="Password" id="password" name="password">
 
         <button>Log In</button>
         <!-- <div class="social">
