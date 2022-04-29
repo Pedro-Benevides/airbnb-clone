@@ -1,7 +1,10 @@
 <?php
+require 'C:\xampp\htdocs\airbnb-clone-full\app\Support\BaseQuery.php';
+require 'C:\xampp\htdocs\airbnb-clone-full\app\Models\Usuario.php';
 
-use app\models\BaseQuery;
-use app\models\Usuario;
+use app\Support\BaseQuery;
+use app\Models\Usuario;
+
 
 class AuthController
 {
@@ -26,22 +29,27 @@ class AuthController
         $this->user = $user;
     }
 
-    public function login(array $requestData): ?Usuario
+    /**Autentica o usuario no banco
+     * @param array $requestData Array associativo com as credenciais do usuario
+     * 
+     * @return Usuario usuario cadastrado no banco
+     * @return null
+     */
+    public function login(array $requestData)
     {
         $canLogin = $this->validate($requestData);
 
         if ($canLogin) {
             $dbUser = $this->db->query(
-
-                $this->usuarioRepo->whereQuery(
-                    'email',
-                    '=',
+                $this->usuarioRepo->searchQuery(
+                    ' email ',
+                    ' = ',
                     $requestData['email']
                 ) . $this->usuarioRepo->whereQuery(
-                    'senha',
-                    '=',
-                    password_hash(htmlspecialchars(stripslashes(trim($requestData['senha']))), PASSWORD_BCRYPT),
-                    'AND'
+                    ' senha ',
+                    ' = ',
+                    md5(htmlspecialchars(stripslashes(trim($requestData['password'])))),
+                    ' and '
                 )
             )->fetch_all(MYSQLI_ASSOC);
 
@@ -53,12 +61,13 @@ class AuthController
                     $row['senha'],
                     $row['pais'],
                     $row['telefone'],
-                    $row['cartaoId'], //TODO: puxar relacionamento com cartao
+                    $row['cartao_id'], //TODO: puxar relacionamento com cartao
                     $row['anfitriao'],
                     $row['locatario']
                 );
-                printf("%s (%s)\n", $row["Name"], $row["CountryCode"]);
-            }, $dbUser)->array_shift;
+            }, $dbUser);
+
+            $dbUser = array_shift($dbUser);
 
             $this->setUser($dbUser);
 
@@ -71,12 +80,12 @@ class AuthController
     public function logout()
     {
         $this->setUser(null);
+        $_SESSION['AUTH'] = null;
     }
 
     private function validate($requestData)
     {
-        return strlen($requestData['senha']) <= 6
-            && !strpos($requestData['senha'], '=')
-            && strpos($requestData['email'], '@');
+        return strlen($requestData['password']) <= 6
+            && !strpos($requestData['password'], '=');
     }
 }
