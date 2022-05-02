@@ -2,7 +2,7 @@
 
 namespace app\Models;
 
-class Acomodacao
+class Locacao
 {
     //Table Atributes
     private $usuarioAnfitriaoId;
