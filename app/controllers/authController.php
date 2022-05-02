@@ -61,9 +61,9 @@ class AuthController
                     $row['senha'],
                     $row['pais'],
                     $row['telefone'],
-                    $row['cartao_id'], //TODO: puxar relacionamento com cartao
                     $row['anfitriao'],
-                    $row['locatario']
+                    $row['locatario'],
+                    $row['cartao_id'], //TODO: puxar relacionamento com cartao
                 );
             }, $dbUser);
 
