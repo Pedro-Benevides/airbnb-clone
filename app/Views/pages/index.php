@@ -1,7 +1,6 @@
 <?php
 require '../../../db/config/connection.php';
 require '../../Controllers/AuthController.php';
-// session_start();
 
 $auth = new AuthController($_SESSION['CONNECTION']);
 

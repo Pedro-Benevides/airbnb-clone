@@ -1,6 +1,6 @@
 <?php
-require 'C:\xampp\htdocs\airbnb-clone-full\app\Support\BaseQuery.php';
-require 'C:\xampp\htdocs\airbnb-clone-full\app\Models\Usuario.php';
+require '../Support/BaseQuery.php';
+require '../Models/Usuario.php';
 
 use app\Support\BaseQuery;
 use app\Models\Usuario;

@@ -1,5 +1,5 @@
 <?php
-require 'C:\xampp\htdocs\airbnb-clone-full\env.php';
+require '../../env.php';
 
 // Create connection
 $conn = new mysqli(
