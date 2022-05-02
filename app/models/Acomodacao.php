@@ -1,10 +1,23 @@
 <?php
 
-namespace app\Models;
+namespace App\Models;
 
+/**
+ * Class Acomodacao
+ *
+ * @property string $cep
+ * @property string $rua
+ * @property string $numero
+ * @property string $cidade
+ * @property string $estado
+ * @property string $país
+ * @property float $diaria
+ * @property string $complemento
+ *
+ * @package App\Models
+ */
 class Acomodacao
 {
-    //Table Atributes
     private $cep;
     private $rua;
     private $numero;
@@ -14,12 +27,6 @@ class Acomodacao
     private $diaria;
     private $complemento;
 
-    //Querys
-    const WHERE  = 'FROM acomodacao WHERE'; // adicionar forma de indicar colunas especificas pro select
-    const INSERT = 'INSERT INTO acomodacao';
-    const DELETE = 'DELETE FROM acomodacao WHERE';
-    const UPDATE = 'UPDATE acomodacao';
-
     function __construct(
         string $cep,
         string $rua,
@@ -27,7 +34,7 @@ class Acomodacao
         string $cidade,
         string $estado,
         string $pais,
-        string $diaria,
+        float $diaria,
         string $complemento = null
     ) {
         $this->cep = $cep;

@@ -1,10 +1,24 @@
 <?php
 
-namespace app\Models;
+namespace App\Models;
 
+/**
+ * Class Locacao
+ *
+ * @property int $usuarioAnfitriaoId
+ * @property int $usuarioLocatarioId
+ * @property int $acomodacaoId
+ * @property float $diaria
+ * @property float $multa
+ * @property string $dataInicio
+ * @property string $dataFim
+ * @property bool $checkin
+ * @property bool $cancelamento
+ *
+ * @package App\Models
+ */
 class Locacao
 {
-    //Table Atributes
     private $usuarioAnfitriaoId;
     private $usuarioLocatarioId;
     private $acomodacaoId;

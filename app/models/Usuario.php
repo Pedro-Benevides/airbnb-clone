@@ -1,11 +1,24 @@
 <?php
 
-namespace app\Models;
+namespace App\Models;
 
+/**
+ * Class Usuario
+ *
+ * @property string $nome
+ * @property string $cpf
+ * @property string $email
+ * @property string $senha
+ * @property string $país
+ * @property string $telefone
+ * @property float $anfitriao
+ * @property float $locatario
+ * @property int $cartaoId
+ *
+ * @package App\Models
+ */
 class Usuario
 {
-    //Table Atributes
-    private $logged;
     private $nome;
     private $cpf;
     private $email;
@@ -23,9 +36,9 @@ class Usuario
         string $senha,
         string $pais,
         string $telefone = null,
-        string $cartaoId = null,
         string $anfitriao = null,
-        string $locatario = null
+        string $locatario = null,
+        string $cartaoId = null
     ) {
         $this->nome = $nome;
         $this->cpf = $cpf;
