@@ -2,8 +2,8 @@
 require '../Support/BaseQuery.php';
 require '../Models/Usuario.php';
 
-use app\Support\BaseQuery;
-use app\Models\Usuario;
+use App\Support\BaseQuery;
+use App\Models\Usuario;
 
 
 class AuthController
