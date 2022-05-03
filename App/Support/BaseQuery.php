@@ -5,7 +5,6 @@ namespace app\Support;
 class BaseQuery
 {
     //TODO: adicionar query de relacionamento
-    private const WHERE = ' where ';
     private $from;
     private $insert;
     private $delete;
@@ -15,7 +14,7 @@ class BaseQuery
     {
         $this->from = ' from ' . $tableName;
         $this->insert = 'INSERT INTO ' . $tableName;
-        $this->delete = 'DELETE FROM ' . $tableName . 'where ';
+        $this->delete = 'DELETE FROM ' . $tableName . ' where ';
         $this->update = 'UPDATE ' . $tableName;
     }
 
@@ -39,9 +38,9 @@ class BaseQuery
     public function whereQuery(string $column, string $operator, string $value, string $logicOperator = null)
     {
         if ($logicOperator) {
-            return $logicOperator . $column . $operator . '\''.$value.'\'';
+            return $logicOperator . $column . $operator . '\'' . $value . '\'';
         } else {
-            return self::WHERE . $column . $operator . '\''.$value.'\'';
+            return ' where ' . $column . $operator . '\'' . $value . '\'';
         }
     }
 
