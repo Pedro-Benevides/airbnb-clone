@@ -1,5 +1,5 @@
 <?php
-require '../../env.php';
+require_once dirname(dirname(dirname(__FILE__))) . '\env.php';
 
 // Create connection
 $conn = new mysqli(
