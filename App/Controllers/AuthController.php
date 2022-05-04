@@ -30,7 +30,7 @@ class AuthController
      * @return Usuario usuario cadastrado no banco
      * @return null usuario não encontrado
      */
-    public function login(array $requestData)
+    public function login(array $requestData): ?Usuario
     {
         $canLogin = $this->validate($requestData);
 
@@ -42,7 +42,7 @@ class AuthController
 
                 return "Login efetuado";
             } else {
-                return "Não encontrado";
+                return null;
             }
         } else {
             return null;
