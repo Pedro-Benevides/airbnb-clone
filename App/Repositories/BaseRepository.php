@@ -1,8 +1,8 @@
 <?php
 
-namespace app\Support;
+namespace App\Repositories;
 
-class BaseQuery
+class BaseRepository
 {
     //TODO: adicionar query de relacionamento
     private $from;
@@ -12,10 +12,10 @@ class BaseQuery
 
     function __construct(string $tableName)
     {
-        $this->from = ' from ' . $tableName;
-        $this->insert = 'INSERT INTO ' . $tableName;
-        $this->delete = 'DELETE FROM ' . $tableName . ' where ';
-        $this->update = 'UPDATE ' . $tableName;
+        $this->from = ' FROM ' . "`{$tableName}`";
+        $this->insert = 'INSERT INTO ' . "`{$tableName}`";
+        $this->delete = 'DELETE FROM ' . "`{$tableName}`" . ' WHERE ';
+        $this->update = 'UPDATE ' . "`{$tableName}`";
     }
 
     private function selectQuery($columns)
@@ -32,7 +32,7 @@ class BaseQuery
         $columnsFormat = implode(', ', $columns);
         $valuesFormat = implode(', ', $values);
 
-        return $this->insert . `($columnsFormat)` . 'VALUES' . `($valuesFormat)`;
+        return $this->insert . " ({$columnsFormat}) " . ' VALUES ' . " ({$valuesFormat}) ";
     }
 
     public function whereQuery(string $column, string $operator, string $value, string $logicOperator = null)
@@ -40,7 +40,7 @@ class BaseQuery
         if ($logicOperator) {
             return $logicOperator . $column . $operator . '\'' . $value . '\'';
         } else {
-            return ' where ' . $column . $operator . '\'' . $value . '\'';
+            return ' WHERE ' . $column . $operator . '\'' . $value . '\'';
         }
     }
 
