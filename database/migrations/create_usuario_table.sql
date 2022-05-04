@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS `airbnb-clone`.`usuario` (
     `cartao_id` INT NULL,
     `nome` VARCHAR(45) NOT NULL,
     `cpf` VARCHAR(45) NOT NULL,
-    `país` VARCHAR(45) NOT NULL,
+    `pais` VARCHAR(45) NOT NULL,
     `email` VARCHAR(45) NOT NULL,
     `senha` VARCHAR(45) NOT NULL,
     `telefone` VARCHAR(45) NULL,
