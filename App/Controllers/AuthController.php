@@ -1,25 +1,20 @@
 <?php
-require '../Support/BaseQuery.php';
-require '../Models/Usuario.php';
+require_once dirname(dirname(__FILE__)) . '\Repositories\UsuarioRepo.php';
 
-use App\Support\BaseQuery;
 use App\Models\Usuario;
-
+use App\Repositories\UsuarioRepo;
 
 class AuthController
 {
-
     private $usuarioRepo;
-    private $db;
     private $user;
 
     public function __construct(mysqli $db)
     {
-        $this->db = $db;
-        $this->usuarioRepo = new BaseQuery('usuario');
+        $this->usuarioRepo = new UsuarioRepo($db);
     }
 
-    public function getUser(): Usuario
+    public function getUser(): ?Usuario
     {
         return $this->user;
     }
@@ -33,45 +28,22 @@ class AuthController
      * @param array $requestData Array associativo com as credenciais do usuario
      * 
      * @return Usuario usuario cadastrado no banco
-     * @return null
+     * @return null usuario não encontrado
      */
     public function login(array $requestData)
     {
         $canLogin = $this->validate($requestData);
 
         if ($canLogin) {
-            $dbUser = $this->db->query(
-                $this->usuarioRepo->searchQuery(
-                    ' email ',
-                    ' = ',
-                    $requestData['email']
-                ) . $this->usuarioRepo->whereQuery(
-                    ' senha ',
-                    ' = ',
-                    md5(htmlspecialchars(stripslashes(trim($requestData['password'])))),
-                    ' and '
-                )
-            )->fetch_all(MYSQLI_ASSOC);
+            $user = $this->usuarioRepo->auth($requestData);
 
-            $dbUser = array_map(function ($row) {
-                return new Usuario(
-                    $row['nome'],
-                    $row['cpf'],
-                    $row['email'],
-                    $row['senha'],
-                    $row['pais'],
-                    $row['telefone'],
-                    $row['anfitriao'],
-                    $row['locatario'],
-                    $row['cartao_id'], //TODO: puxar relacionamento com cartao
-                );
-            }, $dbUser);
+            if ($user) {
+                $this->setUser($user);
 
-            $dbUser = array_shift($dbUser);
-
-            $this->setUser($dbUser);
-
-            return $dbUser;
+                return "Login efetuado";
+            } else {
+                return "Não encontrado";
+            }
         } else {
             return null;
         }
