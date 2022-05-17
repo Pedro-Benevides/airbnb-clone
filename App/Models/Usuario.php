@@ -36,8 +36,8 @@ class Usuario
         string $senha,
         string $pais,
         string $telefone = null,
-        string $anfitriao = null,
-        string $locatario = null,
+        string $anfitriao = null, //TODO: criar classes, são um tipo de usuario
+        string $locatario = null, //TODO: criar classes, são um tipo de usuario
         string $cartaoId = null
     ) {
         $this->nome = $nome;
@@ -89,5 +89,89 @@ class Usuario
     public function getPais()
     {
         return $this->pais;
+    }
+
+    /**
+     * Set the value of nome
+     *
+     * @return  self
+     */
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of cpf
+     *
+     * @return  self
+     */
+    public function setCpf($cpf)
+    {
+        $this->cpf = $cpf;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of email
+     *
+     * @return  self
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of senha
+     *
+     * @return  self
+     */
+    public function setSenha($senha)
+    {
+        $this->senha = $senha;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of pais
+     *
+     * @return  self
+     */
+    public function setPais($pais)
+    {
+        $this->pais = $pais;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of telefone
+     *
+     * @return  self
+     */
+    public function setTelefone($telefone)
+    {
+        $this->telefone = $telefone;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of cartaoId
+     *
+     * @return  self
+     */
+    public function setCartaoId($cartaoId)
+    {
+        $this->cartaoId = $cartaoId;
+
+        return $this;
     }
 }
