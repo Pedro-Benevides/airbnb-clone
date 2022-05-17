@@ -95,4 +95,112 @@ class Locacao
     {
         return $this->cancelamento;
     }
+
+    /**
+     * Set the value of usuarioAnfitriaoId
+     *
+     * @return  self
+     */
+    public function setUsuarioAnfitriaoId($usuarioAnfitriaoId)
+    {
+        $this->usuarioAnfitriaoId = $usuarioAnfitriaoId;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of usuarioLocatarioId
+     *
+     * @return  self
+     */
+    public function setUsuarioLocatarioId($usuarioLocatarioId)
+    {
+        $this->usuarioLocatarioId = $usuarioLocatarioId;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of acomodacaoId
+     *
+     * @return  self
+     */
+    public function setAcomodacaoId($acomodacaoId)
+    {
+        $this->acomodacaoId = $acomodacaoId;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of diaria
+     *
+     * @return  self
+     */
+    public function setDiaria($diaria)
+    {
+        $this->diaria = $diaria;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of dataInicio
+     *
+     * @return  self
+     */
+    public function setDataInicio($dataInicio)
+    {
+        $this->dataInicio = $dataInicio;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of dataFim
+     *
+     * @return  self
+     */
+    public function setDataFim($dataFim)
+    {
+        $this->dataFim = $dataFim;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of multa
+     *
+     * @return  self
+     */
+    public function setMulta($multa)
+    {
+        $this->multa = $multa;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of checkin
+     *
+     * @return  self
+     */
+    public function setCheckin($checkin)
+    {
+        $this->checkin = $checkin;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of cancelamento
+     *
+     * @return  self
+     */
+    public function setCancelamento($cancelamento)
+    {
+        $this->cancelamento = $cancelamento;
+
+        return $this;
+    }
 }
