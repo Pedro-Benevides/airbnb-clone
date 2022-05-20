@@ -26,18 +26,18 @@ class UsuarioRepo extends BaseRepository
 
         return
             $this->db->query(
-                $this->insertQuery($columns, $values)
+                $this->insert($columns, $values)
             );
     }
 
     public function auth(array $credentials): ?Usuario
     {
         $result = $this->db->query(
-            $this->searchQuery(
+            $this->search(
                 ' email ',
                 ' = ',
                 $credentials['email']
-            ) . $this->whereQuery(
+            ) . $this->where(
                 ' senha ',
                 ' = ',
                 md5(
