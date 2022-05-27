@@ -9,11 +9,8 @@ namespace App\Models;
  * @property string $cpf
  * @property string $email
  * @property string $senha
- * @property string $país
+ * @property Pais $país
  * @property string $telefone
- * @property float $anfitriao
- * @property float $locatario
- * @property int $cartaoId
  *
  * @package App\Models
  */
@@ -23,10 +20,7 @@ class Usuario
     private $cpf;
     private $email;
     private $telefone;
-    private $cartaoId;
     private $pais;
-    private $anfitriao;
-    private $locatario;
     private $senha;
 
     function __construct(
@@ -34,59 +28,38 @@ class Usuario
         string $cpf,
         string $email,
         string $senha,
-        string $pais,
-        string $telefone = null,
-        string $anfitriao = null, //TODO: criar classes, são um tipo de usuario
-        string $locatario = null, //TODO: criar classes, são um tipo de usuario
-        string $cartaoId = null
+        Pais $pais,
+        string $telefone = null
     ) {
-        $this->nome = $nome;
+        $this->nome = ucwords($nome);
         $this->cpf = $cpf;
         $this->email = $email;
         $this->senha = password_hash($senha, PASSWORD_BCRYPT);
         $this->telefone = $telefone;
-        $this->cartaoId = $cartaoId;
         $this->pais = $pais;
-        $this->locatario = $locatario;
-        $this->anfitriao = $anfitriao;
     }
 
-    public function getNome()
+    public function getNome(): string
     {
         return $this->nome;
     }
 
-    public function getCpf()
+    public function getCpf(): string
     {
         return $this->cpf;
     }
 
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function getTelefone()
+    public function getTelefone(): string
     {
         return $this->telefone;
     }
 
-    public function getCartao()
-    {
-        return $this->cartaoId; //TODO: colocar query sql para buscar o cartao
-    }
-
-    public function getAnfitriao()
-    {
-        return $this->anfitriao;
-    }
-
-    public function getLocatario()
-    {
-        return $this->locatario;
-    }
-
-    public function getPais()
+    public function getPais(): Pais
     {
         return $this->pais;
     }
@@ -96,9 +69,9 @@ class Usuario
      *
      * @return  self
      */
-    public function setNome($nome)
+    public function setNome(string $nome)
     {
-        $this->nome = $nome;
+        $this->nome = ucwords($nome);
 
         return $this;
     }
@@ -108,7 +81,7 @@ class Usuario
      *
      * @return  self
      */
-    public function setCpf($cpf)
+    public function setCpf(string $cpf)
     {
         $this->cpf = $cpf;
 
@@ -120,7 +93,7 @@ class Usuario
      *
      * @return  self
      */
-    public function setEmail($email)
+    public function setEmail(string $email)
     {
         $this->email = $email;
 
@@ -132,9 +105,9 @@ class Usuario
      *
      * @return  self
      */
-    public function setSenha($senha)
+    public function setSenha(string $senha)
     {
-        $this->senha = $senha;
+        $this->senha = password_hash($senha, PASSWORD_BCRYPT);
 
         return $this;
     }
@@ -144,7 +117,7 @@ class Usuario
      *
      * @return  self
      */
-    public function setPais($pais)
+    public function setPais(Pais $pais)
     {
         $this->pais = $pais;
 
@@ -156,21 +129,9 @@ class Usuario
      *
      * @return  self
      */
-    public function setTelefone($telefone)
+    public function setTelefone(string $telefone)
     {
         $this->telefone = $telefone;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of cartaoId
-     *
-     * @return  self
-     */
-    public function setCartaoId($cartaoId)
-    {
-        $this->cartaoId = $cartaoId;
 
         return $this;
     }
