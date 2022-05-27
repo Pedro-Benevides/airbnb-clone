@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Entities\Anfitriao;
+use App\Entities\Locatario;
+
 /**
  * Class Locacao
  *
- * @property int $usuarioAnfitriaoId
- * @property int $usuarioLocatarioId
- * @property int $acomodacaoId
+ * @property Anfitriao $anfitriao
+ * @property Locatario $locatario
+ * @property Acomodacao $acomodacao
  * @property float $diaria
  * @property float $multa
  * @property string $dataInicio
@@ -19,9 +22,9 @@ namespace App\Models;
  */
 class Locacao
 {
-    private $usuarioAnfitriaoId;
-    private $usuarioLocatarioId;
-    private $acomodacaoId;
+    private $anfitriao;
+    private $locatario;
+    private $acomodacao;
     private $diaria;
     private $multa;
     private $dataInicio;
@@ -30,9 +33,9 @@ class Locacao
     private $cancelamento;
 
     function __construct(
-        int $usuarioAnfitriaoId,
-        int $usuarioLocatarioId,
-        int $acomodacaoId,
+        Anfitriao $anfitriao,
+        Locatario $locatario,
+        Acomodacao $acomodacao,
         float $diaria,
         string $dataInicio,
         string $dataFim,
@@ -40,94 +43,94 @@ class Locacao
         bool $checkin = false,
         bool $cancelamento = false
     ) {
-        $this->usuarioAnfitriaoId = $usuarioAnfitriaoId;
-        $this->usuarioLocatarioId = $usuarioLocatarioId;
-        $this->acomodacaoId = $acomodacaoId;
-        $this->diaria = $diaria;
-        $this->multa = $multa;
+        $this->anfitriao = $anfitriao;
+        $this->locatario = $locatario;
+        $this->acomodacao = $acomodacao;
+        $this->diaria = floatval(number_format($diaria, 2, '.', ''));
+        $this->multa = floatval(number_format($multa, 2, '.', ''));
         $this->dataInicio = $dataInicio;
         $this->dataFim = $dataFim;
         $this->checkin = $checkin;
         $this->cancelamento = $cancelamento;
     }
 
-    public function getAcomodacao()
+    public function getAcomodacao(): Acomodacao
     {
-        return $this->acomodacaoId;
+        return $this->acomodacao;
     }
 
-    public function getLocatario()
+    public function getLocatario(): Locatario
     {
-        return $this->usuarioLocatarioId;
+        return $this->locatario;
     }
 
-    public function getAnfitriao()
+    public function getAnfitriao(): Anfitriao
     {
-        return $this->usuarioAnfitriaoId;
+        return $this->anfitriao;
     }
 
-    public function getDataFim()
+    public function getDataFim(): string
     {
         return $this->dataFim;
     }
 
-    public function getDataInicio()
+    public function getDataInicio(): string
     {
         return $this->dataInicio;
     }
 
-    public function getMulta()
+    public function getMulta(): float
     {
         return $this->multa;
     }
 
-    public function getDiaria()
+    public function getDiaria(): float
     {
         return $this->diaria;
     }
 
-    public function getCheckin()
+    public function getCheckin(): bool
     {
         return $this->checkin;
     }
 
-    public function getCancelamento()
+    public function getCancelamento(): bool
     {
         return $this->cancelamento;
     }
 
     /**
-     * Set the value of usuarioAnfitriaoId
+     * Set the value of anfitriao
      *
      * @return  self
      */
-    public function setUsuarioAnfitriaoId($usuarioAnfitriaoId)
+    public function setAnfitriao(Anfitriao $anfitriao)
     {
-        $this->usuarioAnfitriaoId = $usuarioAnfitriaoId;
+        $this->anfitriao = $anfitriao;
 
         return $this;
     }
 
     /**
-     * Set the value of usuarioLocatarioId
+     * Set the value of locatario
      *
      * @return  self
      */
-    public function setUsuarioLocatarioId($usuarioLocatarioId)
+    public function setLocatario(Locatario $locatario)
     {
-        $this->usuarioLocatarioId = $usuarioLocatarioId;
+        $this->locatario = $locatario;
 
         return $this;
     }
 
     /**
-     * Set the value of acomodacaoId
+     * Set the value of acomodacao
      *
      * @return  self
      */
-    public function setAcomodacaoId($acomodacaoId)
+    public function setAcomodacao(Acomodacao $acomodacao)
     {
-        $this->acomodacaoId = $acomodacaoId;
+        $this->acomodacao = $acomodacao;
 
         return $this;
     }
@@ -137,9 +140,10 @@ class Locacao
      *
      * @return  self
      */
-    public function setDiaria($diaria)
+    public function setDiaria(float $diaria)
     {
-        $this->diaria = $diaria;
+
+        $this->diaria = floatval(number_format($diaria, 2, '.', ''));
 
         return $this;
     }
@@ -149,7 +153,7 @@ class Locacao
      *
      * @return  self
      */
-    public function setDataInicio($dataInicio)
+    public function setDataInicio(string $dataInicio)
     {
         $this->dataInicio = $dataInicio;
 
@@ -161,7 +165,7 @@ class Locacao
      *
      * @return  self
      */
-    public function setDataFim($dataFim)
+    public function setDataFim(string $dataFim)
     {
         $this->dataFim = $dataFim;
 
@@ -173,9 +177,9 @@ class Locacao
      *
      * @return  self
      */
-    public function setMulta($multa)
+    public function setMulta(float $multa)
     {
-        $this->multa = $multa;
+        $this->multa = floatval(number_format($multa, 2, '.', ''));
 
         return $this;
     }
@@ -185,7 +189,7 @@ class Locacao
      *
      * @return  self
      */
-    public function setCheckin($checkin)
+    public function setCheckin(bool $checkin)
     {
         $this->checkin = $checkin;
 
@@ -197,7 +201,7 @@ class Locacao
      *
      * @return  self
      */
-    public function setCancelamento($cancelamento)
+    public function setCancelamento(bool $cancelamento)
     {
         $this->cancelamento = $cancelamento;
 
