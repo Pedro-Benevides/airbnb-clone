@@ -3,7 +3,7 @@
 namespace App\Models;
 
 /**
- * Class País
+ * Class Cartao
  *
  * @property Usuario $titular
  * @property string $numero
@@ -13,7 +13,7 @@ namespace App\Models;
  * @package App\Models
  */
 
-class Pais
+class Cartao
 {
     private $titular;
     private $numero;
