@@ -5,25 +5,29 @@ namespace App\Models;
 /**
  * Class Acomodacao
  *
+ * @property Usuario $proprietario
+ * @property float $diaria
+ * @property string $capacidade
  * @property string $cep
  * @property string $rua
  * @property string $numero
- * @property string $cidade
- * @property string $estado
- * @property string $país
- * @property float $diaria
+ * @property Cidade $cidade
  * @property string $complemento
+ * @property string $imagemInterior
+ * @property string $imagemFrontal
+ * @property string $imagemAdicional
+ * @property string $descricao
+ * 
  *
  * @package App\Models
  */
 class Acomodacao
 {
+    private $proprietario;
     private $cep;
     private $rua;
     private $numero;
     private $cidade;
-    private $estado;
-    private $pais;
     private $diaria;
     private $complemento;
     private $capacidade;
@@ -33,29 +37,27 @@ class Acomodacao
     private $imagemAdicional;
 
     function __construct(
+        Usuario $proprietario,
+        float $diaria,
+        int $capacidade,
         string $cep,
         string $rua,
         string $numero,
-        string $cidade,
-        string $estado,
-        string $pais,
-        float $diaria,
-        int $capacidade,
+        Cidade $cidade,
         string $complemento = null,
-        string $descricao = null,
         string $imagemInterior = null,
         string $imagemFrontal = null,
-        string $imagemAdicional = null
+        string $imagemAdicional = null,
+        string $descricao = null
 
     ) {
+        $this->proprietario = $proprietario;
         $this->cep = $cep;
         $this->rua = $rua;
         $this->numero = $numero;
         $this->cidade = $cidade;
-        $this->estado = $estado;
-        $this->pais = $pais;
         $this->complemento = $complemento;
-        $this->diaria = $diaria;
+        $this->diaria = number_format($diaria, 2, '.', '');
         $this->capacidade = $capacidade;
         $this->descricao = $descricao;
         $this->imagemInterior = $imagemInterior;
@@ -63,50 +65,40 @@ class Acomodacao
         $this->imagemAdicional = $imagemAdicional;
     }
 
-    public function getCep()
+    public function getCep(): string
     {
         return $this->cep;
     }
 
-    public function getRua()
+    public function getRua(): string
     {
         return $this->rua;
     }
 
-    public function getNumero()
+    public function getNumero(): string
     {
         return $this->numero;
     }
 
-    public function getCidade()
+    public function getCidade(): Cidade
     {
         return $this->cidade;
     }
 
-    public function getEstado()
-    {
-        return $this->estado;
-    }
-
-    public function getDiaria()
+    public function getDiaria(): float
     {
         return $this->diaria;
     }
 
-    public function getComplemento()
+    public function getComplemento(): string
     {
         return $this->complemento;
-    }
-
-    public function getPais()
-    {
-        return $this->pais;
     }
 
     /**
      * Get the value of capacidade
      */
-    public function getCapacidade()
+    public function getCapacidade(): int
     {
         return $this->capacidade;
     }
@@ -114,7 +106,7 @@ class Acomodacao
     /**
      * Get the value of descricao
      */
-    public function getDescricao()
+    public function getDescricao(): string
     {
         return $this->descricao;
     }
@@ -122,7 +114,7 @@ class Acomodacao
     /**
      * Get the value of imagemInterior
      */
-    public function getImagemInterior()
+    public function getImagemInterior(): string
     {
         return $this->imagemInterior;
     }
@@ -130,7 +122,7 @@ class Acomodacao
     /**
      * Get the value of imagemFrontal
      */
-    public function getImagemFrontal()
+    public function getImagemFrontal(): string
     {
         return $this->imagemFrontal;
     }
@@ -138,7 +130,7 @@ class Acomodacao
     /**
      * Get the value of imagemAdicional
      */
-    public function getImagemAdicional()
+    public function getImagemAdicional(): string
     {
         return $this->imagemAdicional;
     }
@@ -148,7 +140,7 @@ class Acomodacao
      *
      * @return  self
      */
-    public function setCep($cep)
+    public function setCep(string $cep)
     {
         $this->cep = $cep;
 
@@ -160,7 +152,7 @@ class Acomodacao
      *
      * @return  self
      */
-    public function setRua($rua)
+    public function setRua(string $rua)
     {
         $this->rua = $rua;
 
@@ -172,7 +164,7 @@ class Acomodacao
      *
      * @return  self
      */
-    public function setNumero($numero)
+    public function setNumero(string $numero)
     {
         $this->numero = $numero;
 
@@ -184,33 +176,9 @@ class Acomodacao
      *
      * @return  self
      */
-    public function setCidade($cidade)
+    public function setCidade(Cidade $cidade)
     {
         $this->cidade = $cidade;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of estado
-     *
-     * @return  self
-     */
-    public function setEstado($estado)
-    {
-        $this->estado = $estado;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of pais
-     *
-     * @return  self
-     */
-    public function setPais($pais)
-    {
-        $this->pais = $pais;
 
         return $this;
     }
@@ -220,9 +188,9 @@ class Acomodacao
      *
      * @return  self
      */
-    public function setDiaria($diaria)
+    public function setDiaria(float $diaria)
     {
-        $this->diaria = $diaria;
+        $this->diaria = number_format($diaria, 2, '.', '');
 
         return $this;
     }
@@ -232,7 +200,7 @@ class Acomodacao
      *
      * @return  self
      */
-    public function setComplemento($complemento)
+    public function setComplemento(string $complemento)
     {
         $this->complemento = $complemento;
 
@@ -244,7 +212,7 @@ class Acomodacao
      *
      * @return  self
      */
-    public function setCapacidade($capacidade)
+    public function setCapacidade(int $capacidade)
     {
         $this->capacidade = $capacidade;
 
@@ -256,7 +224,7 @@ class Acomodacao
      *
      * @return  self
      */
-    public function setDescricao($descricao)
+    public function setDescricao(string $descricao)
     {
         $this->descricao = $descricao;
 
@@ -268,7 +236,7 @@ class Acomodacao
      *
      * @return  self
      */
-    public function setImagemInterior($imagemInterior)
+    public function setImagemInterior(string $imagemInterior)
     {
         $this->imagemInterior = $imagemInterior;
 
@@ -280,7 +248,7 @@ class Acomodacao
      *
      * @return  self
      */
-    public function setImagemFrontal($imagemFrontal)
+    public function setImagemFrontal(string $imagemFrontal)
     {
         $this->imagemFrontal = $imagemFrontal;
 
@@ -292,9 +260,29 @@ class Acomodacao
      *
      * @return  self
      */
-    public function setImagemAdicional($imagemAdicional)
+    public function setImagemAdicional(string $imagemAdicional)
     {
         $this->imagemAdicional = $imagemAdicional;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of proprietario
+     */
+    public function getProprietario(): Usuario
+    {
+        return $this->proprietario;
+    }
+
+    /**
+     * Set the value of proprietario
+     *
+     * @return  self
+     */
+    public function setProprietario(Usuario $proprietario)
+    {
+        $this->proprietario = $proprietario;
 
         return $this;
     }
