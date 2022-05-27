@@ -57,7 +57,7 @@ class Acomodacao
         $this->numero = $numero;
         $this->cidade = $cidade;
         $this->complemento = $complemento;
-        $this->diaria = number_format($diaria, 2, '.', '');
+        $this->diaria = floatval(number_format($diaria, 2, '.', ''));
         $this->capacidade = $capacidade;
         $this->descricao = $descricao;
         $this->imagemInterior = $imagemInterior;
@@ -190,7 +190,7 @@ class Acomodacao
      */
     public function setDiaria(float $diaria)
     {
-        $this->diaria = number_format($diaria, 2, '.', '');
+        $this->diaria = floatval(number_format($diaria, 2, '.', ''));
 
         return $this;
     }

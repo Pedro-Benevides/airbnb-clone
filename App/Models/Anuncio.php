@@ -24,7 +24,7 @@ class Anuncio
     {
         $this->dataInicio = $dataInicio;
         $this->dataFim = $dataFim;
-        $this->valor = number_format($valor, 2, '.', '');
+        $this->valor = floatval(number_format($valor, 2, '.', ''));
         $this->acomodacao = $acomodacao;
     }
 
@@ -83,7 +83,7 @@ class Anuncio
      */
     public function setValor(float $valor)
     {
-        $this->valor = number_format($valor, 2, '.', '');
+        $this->valor = floatval(number_format($valor, 2, '.', ''));
 
         return $this;
     }
