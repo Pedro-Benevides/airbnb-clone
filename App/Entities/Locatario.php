@@ -13,20 +13,15 @@ class Locatario extends Usuario
     private $comentarios;
 
     public function __construct(
-        string $nome,
-        string $cpf,
-        string $email,
-        string $senha,
-        string $pais,
-        string $telefone = null
+        Usuario $usuario
     ) {
         parent::__construct(
-            $nome,
-            $cpf,
-            $email,
-            $senha,
-            $pais,
-            $telefone,
+            $usuario->nome,
+            $usuario->cpf,
+            $usuario->email,
+            $usuario->senha,
+            $usuario->pais,
+            $usuario->telefone,
         );
     }
 
