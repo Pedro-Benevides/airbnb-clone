@@ -12,6 +12,7 @@ namespace App\Models;
  * @property string $rua
  * @property string $numero
  * @property Cidade $cidade
+ * @property TipoAcomodacao $tipoAcomodacao
  * @property string $complemento
  * @property string $imagemInterior
  * @property string $imagemFrontal
@@ -24,6 +25,7 @@ namespace App\Models;
 class Acomodacao
 {
     private $proprietario;
+    private $tipoAcomodacao;
     private $cep;
     private $rua;
     private $numero;
@@ -44,6 +46,7 @@ class Acomodacao
         string $rua,
         string $numero,
         Cidade $cidade,
+        TipoAcomodacao $tipoAcomodacao,
         string $complemento = null,
         string $imagemInterior = null,
         string $imagemFrontal = null,
@@ -52,6 +55,7 @@ class Acomodacao
 
     ) {
         $this->proprietario = $proprietario;
+        $this->tipoAcomodacao = $tipoAcomodacao;
         $this->cep = $cep;
         $this->rua = $rua;
         $this->numero = $numero;
@@ -283,6 +287,26 @@ class Acomodacao
     public function setProprietario(Usuario $proprietario)
     {
         $this->proprietario = $proprietario;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of tipoAcomodacao
+     */
+    public function getTipoAcomodacao(): TipoAcomodacao
+    {
+        return $this->tipoAcomodacao;
+    }
+
+    /**
+     * Set the value of tipoAcomodacao
+     *
+     * @return  self
+     */
+    public function setTipoAcomodacao(TipoAcomodacao $tipoAcomodacao)
+    {
+        $this->tipoAcomodacao = $tipoAcomodacao;
 
         return $this;
     }
