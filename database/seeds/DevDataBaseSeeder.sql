@@ -134,7 +134,7 @@ VALUES
   (
     2,
     2,
-    1,
+    2,
     1,
     41678097,
     'Rua do Comando',
@@ -227,8 +227,8 @@ INSERT INTO
 VALUES
   (
     1,
-    2,
     1,
+    2,
     1,
     233,
     30,

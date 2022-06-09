@@ -14,8 +14,8 @@ INSERT INTO
 VALUES
     (
         1,
-        2,
         1,
+        2,
         1,
         233,
         30,
