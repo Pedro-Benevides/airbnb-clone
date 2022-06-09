@@ -2,16 +2,17 @@
 require_once dirname(dirname(dirname(__FILE__))) . '\env.php';
 
 // Create connection
-$conn = new mysqli(
-    $_SESSION['DB_HOSTNAME'],
-    $_SESSION['DB_USER'],
-    null,
-    $_SESSION['DB_DATABASE'],
-    $_SESSION['DB_PORT']
-);
+$servername = $_SESSION['DB_HOSTNAME'];
+$dbname = $_SESSION['DB_DATABASE'];
+$username = $_SESSION['DB_USER'];
+$password = $_SESSION['DB_PASSWORD'];
 
-$_SESSION['CONNECTION'] = $conn;
-// Check connection
-if ($conn->connect_error) {
-    die('Connection failed: ' . $conn->connect_error);
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    // set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $_SESSION['CONNECTION'] = $conn;
+    echo "conectado com sucesso";
+} catch (PDOException $e) {
+    echo "erro na conexao" . $e->getMessage();
 }
