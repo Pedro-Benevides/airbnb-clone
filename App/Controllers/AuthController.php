@@ -9,9 +9,9 @@ class AuthController
     private $usuarioRepo;
     private $user;
 
-    public function __construct(mysqli $db)
+    public function __construct()
     {
-        $this->usuarioRepo = new UsuarioRepo($db);
+        $this->usuarioRepo = new UsuarioRepo();
     }
 
     public function getUser(): ?Usuario
@@ -27,17 +27,17 @@ class AuthController
     /**Autentica o usuario no banco
      * @param array $requestData Array associativo com as credenciais do usuario
      * 
-     * @return Usuario usuario cadastrado no banco
+     * @return string confirmação do login
      * @return null usuario não encontrado
      */
-    public function login(array $requestData): ?Usuario
+    public function login(array $requestData): ?string
     {
         $canLogin = $this->validate($requestData);
 
         if ($canLogin) {
             $user = $this->usuarioRepo->auth($requestData);
 
-            if ($user) {
+            if (!empty($user)) {
                 $this->setUser($user);
 
                 return "Login efetuado";
