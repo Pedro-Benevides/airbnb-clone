@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `airbnb-clone`.`usuario` (
   `cpf` VARCHAR(11) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `senha` VARCHAR(45) NOT NULL,
-  `telefone` VARCHAR(11) NULL DEFAULT NULL,
+  `telefone` VARCHAR(15) NULL DEFAULT NULL,
   `locatario` TINYINT NULL DEFAULT NULL,
   `anfitriao` TINYINT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
