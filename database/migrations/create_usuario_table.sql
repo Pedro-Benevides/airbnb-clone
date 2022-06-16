@@ -1,16 +1,14 @@
+-- DROP TABLE IF EXISTS `airbnb-clone`.`usuario` ;
 CREATE TABLE IF NOT EXISTS `airbnb-clone`.`usuario` (
     `id` INT NOT NULL AUTO_INCREMENT,
-    `cartao_id` INT NULL,
+    `pais_id` INT NOT NULL,
     `nome` VARCHAR(45) NOT NULL,
-    `cpf` VARCHAR(45) NOT NULL,
-    `pais` VARCHAR(45) NOT NULL,
+    `cpf` VARCHAR(11) NOT NULL,
     `email` VARCHAR(45) NOT NULL,
     `senha` VARCHAR(45) NOT NULL,
-    `telefone` VARCHAR(45) NULL,
-    `locatario` TINYINT NULL,
-    `anfitriao` TINYINT NULL,
+    `telefone` VARCHAR(11) NULL DEFAULT NULL,
+    `locatario` TINYINT NULL DEFAULT NULL,
+    `anfitriao` TINYINT NULL DEFAULT NULL,
     PRIMARY KEY (`id`),
-    CONSTRAINT `fk_usuario_cartao1` FOREIGN KEY (`cartao_id`) REFERENCES `airbnb-clone`.`cartao` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+    CONSTRAINT `fk_usuario_pais1` FOREIGN KEY (`pais_id`) REFERENCES `airbnb-clone`.`pais` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
-CREATE UNIQUE INDEX `id_UNIQUE` ON `airbnb-clone`.`usuario` (`id` ASC) VISIBLE;
-CREATE INDEX `fk_usuario_cartao1_idx` ON `airbnb-clone`.`usuario` (`cartao_id` ASC) VISIBLE;
