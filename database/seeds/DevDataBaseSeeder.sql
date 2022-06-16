@@ -74,7 +74,7 @@ VALUES (
 --
 -- Dumping data for table `tipo_acomodacao`
 --
-INSERT INTO `tipo_acomodacao` (`id`, `nome`)
+INSERT INTO `tipo_acomodacao` (`id`, `descricao`)
 VALUES (1, 'Casa '),
   (2, 'Quarto'),
   (3, 'Apartamento');
