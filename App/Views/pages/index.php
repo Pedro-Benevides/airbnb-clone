@@ -2,7 +2,7 @@
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . '\database\config\Connection.php';
 require_once dirname(dirname(dirname(__FILE__))) . '\Controllers\AuthController.php';
 
-$auth = new AuthController($_SESSION['CONNECTION']);
+$auth = new AuthController();
 
 //Autenticação do usuario na sessao
 $auth->login($_POST);
