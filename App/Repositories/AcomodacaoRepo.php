@@ -2,43 +2,44 @@
 
 namespace App\Repositories;
 
+require_once dirname(dirname(dirname(__FILE__))) . '\database\config\connection.php';
 require_once dirname(dirname(__FILE__)) . '\Models\Acomodacao.php';
 require_once 'BaseRepository.php';
 
 use App\Models\Acomodacao;
 use App\Repositories\BaseRepository;
-use mysqli;
+use Connection;
+use PDO;
 
 class AcomodacaoRepo extends BaseRepository
 {
-    private $db;
-
-    public function __construct(mysqli $db)
+    public function __construct()
     {
-        $this->db = $db;
         parent::__construct('acomodacao');
     }
 
     public function create(array $acomodacaoForm)
     {
+        $db = Connection::Connect();
         $columns = array_keys($acomodacaoForm);
         $values = array_values($acomodacaoForm);
 
         return
-            $this->db->query(
+            $db->query(
                 $this->insert($columns, $values)
             );
     }
 
     public function get(int $id): ?Acomodacao
     {
-        $result = $this->db->query(
+        $db = Connection::Connect();
+        $result = $db->query(
             $this->search(
                 ' id ',
                 ' = ',
                 $id
             )
-        )->fetch_all(MYSQLI_ASSOC);
+        )->fetch(PDO::FETCH_ASSOC);
 
         $acomodacaoArray = $this->buildAcomodacao($result);
 

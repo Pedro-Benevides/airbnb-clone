@@ -2,37 +2,43 @@
 
 namespace App\Repositories;
 
+require_once dirname(dirname(dirname(__FILE__))) . '\database\config\connection.php';
 require_once dirname(dirname(__FILE__)) . '\Models\Usuario.php';
+require_once dirname(dirname(__FILE__)) . '\Repositories\PaisRepo.php';
 require_once 'BaseRepository.php';
 
 use App\Models\Usuario;
 use App\Repositories\BaseRepository;
-use mysqli;
+use App\Repositories\PaisRepo;
+use Connection;
+use PDO;
 
 class UsuarioRepo extends BaseRepository
 {
-    private $db;
+    private $paisRepo;
 
-    public function __construct(mysqli $db)
+    public function __construct()
     {
-        $this->db = $db;
+        $this->paisRepo = new PaisRepo();
         parent::__construct('usuario');
     }
 
     public function create(array $userForm)
     {
+        $db = Connection::Connect();
         $columns = array_keys($userForm);
         $values = array_values($userForm);
 
         return
-            $this->db->query(
+            $db->query(
                 $this->insert($columns, $values)
             );
     }
 
     public function auth(array $credentials): ?Usuario
     {
-        $result = $this->db->query(
+        $db = Connection::Connect();
+        $result = $db->query(
             $this->search(
                 ' email ',
                 ' = ',
@@ -51,27 +57,28 @@ class UsuarioRepo extends BaseRepository
                 ),
                 ' and '
             )
-        )->fetch_all(MYSQLI_ASSOC);
+        )->fetch(PDO::FETCH_ASSOC);
 
-        $userArray = $this->buildUsuario($result);
+        $user = $this->buildUsuario($result);
 
-        return array_shift($userArray);
+        return $user;
     }
 
     private function buildUsuario($queryResult)
     {
-        return array_map(function ($row) {
-            return new Usuario(
-                $row['nome'],
-                $row['cpf'],
-                $row['email'],
-                $row['senha'],
-                $row['pais'],
-                $row['telefone'],
-                $row['anfitriao'],
-                $row['locatario'],
-                $row['cartao_id'], //TODO: puxar relacionamento com cartao
-            );
-        }, $queryResult);
+        $userPais = $this->paisRepo->whereId($queryResult['pais_id']);
+
+        $queryResult['pais'] = $userPais;
+
+        return new Usuario(
+            $queryResult['nome'],
+            $queryResult['cpf'],
+            $queryResult['email'],
+            $queryResult['senha'],
+            $queryResult['pais'],
+            $queryResult['telefone'],
+            $queryResult['anfitriao'],
+            $queryResult['locatario'],
+        );
     }
 }

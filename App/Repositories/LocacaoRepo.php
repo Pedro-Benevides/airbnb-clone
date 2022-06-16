@@ -2,43 +2,44 @@
 
 namespace App\Repositories;
 
+require_once dirname(dirname(dirname(__FILE__))) . '\database\config\connection.php';
 require_once dirname(dirname(__FILE__)) . '\Models\Locacao.php';
 require_once 'BaseRepository.php';
 
 use App\Models\Locacao;
 use App\Repositories\BaseRepository;
-use mysqli;
+use Connection;
+use PDO;
 
 class LocacaoRepo extends BaseRepository
 {
-    private $db;
-
-    public function __construct(mysqli $db)
+    public function __construct()
     {
-        $this->db = $db;
         parent::__construct('locacao');
     }
 
     public function create(array $locacaoData)
     {
+        $db = Connection::Connect();
         $columns = array_keys($locacaoData);
         $values = array_values($locacaoData);
 
         return
-            $this->db->query(
+            $db->query(
                 $this->insert($columns, $values)
             );
     }
 
     public function get(int $id): ?Locacao
     {
-        $result = $this->db->query(
+        $db = Connection::Connect();
+        $result = $db->query(
             $this->search(
                 ' id ',
                 ' = ',
                 $id
             )
-        )->fetch_all(MYSQLI_ASSOC);
+        )->fetch(PDO::FETCH_ASSOC);
 
         $acomodacaoArray = $this->buildLocacao($result);
 
