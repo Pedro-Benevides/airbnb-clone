@@ -1,7 +1,5 @@
-INSERT INTO
-    `locacao` (
+INSERT INTO `locacao` (
         `id`,
-        `usuario_anfitriao_id`,
         `usuario_locatario_id`,
         `acomodacao_id`,
         `valor`,
@@ -11,9 +9,7 @@ INSERT INTO
         `checkin`,
         `cancelamento`
     )
-VALUES
-    (
-        1,
+VALUES (
         1,
         2,
         1,
