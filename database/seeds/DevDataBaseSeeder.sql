@@ -1,7 +1,7 @@
 --
 -- Dumping data for table `pais`
 --
-INSERT INTO `pais` (`id`, `name`)
+INSERT INTO `pais` (`id`, `nome`)
 VALUES (1, 'Brazil'),
   (2, 'Argentina'),
   (3, 'Portugual'),
@@ -15,7 +15,7 @@ VALUES (1, 'Brazil'),
 --
 -- Dumping data for table `estado`
 --
-INSERT INTO `estado` (`id`, `name`, `pais_id`)
+INSERT INTO `estado` (`id`, `nome`, `pais_id`)
 VALUES (1, 'Bahia', 1),
   (2, 'São Paulo', 1),
   (3, 'Rio de Janeiro', 1),
@@ -29,7 +29,7 @@ VALUES (1, 'Bahia', 1),
 --
 -- Dumping data for table `cidade`
 --
-INSERT INTO `cidade` (`id`, `name`, `estado_id`)
+INSERT INTO `cidade` (`id`, `nome`, `estado_id`)
 VALUES (1, 'Salvador', 1),
   (2, 'Feira de Santana', 1),
   (3, 'Camaçari', 1),
@@ -66,7 +66,7 @@ VALUES (
     'Pedro Benevides',
     '09899794497',
     'pvsbenevides197@gmail.com',
-    'a9f53070058cd464c2528bfdf143dd46',
+    'e10adc3949ba59abbe56e057f20f883e',
     '5571988958804',
     1,
     1
@@ -74,7 +74,7 @@ VALUES (
 --
 -- Dumping data for table `tipo_acomodacao`
 --
-INSERT INTO `tipo_acomodacao` (`id`, `name`)
+INSERT INTO `tipo_acomodacao` (`id`, `nome`)
 VALUES (1, 'Casa '),
   (2, 'Quarto'),
   (3, 'Apartamento');
