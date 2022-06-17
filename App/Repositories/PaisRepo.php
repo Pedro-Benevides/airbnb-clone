@@ -13,7 +13,6 @@ use PDO;
 
 class PaisRepo extends BaseRepository
 {
-    private $db;
 
     public function __construct()
     {
@@ -37,7 +36,7 @@ class PaisRepo extends BaseRepository
     private function buildPais($queryResult)
     {
         return new Pais(
-            $queryResult['name']
+            $queryResult['nome']
         );
     }
 }
