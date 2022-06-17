@@ -13,7 +13,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <!--Stylesheet-->
-    <link rel="stylesheet" type="text/css" href="../styles/login.css">
+    <style type="text/css">
+        <?php require_once dirname(dirname(__FILE__)) . '\styles\login.php'; ?>
+    </style>
 
 </head>
 
