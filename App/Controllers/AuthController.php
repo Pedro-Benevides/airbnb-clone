@@ -14,44 +14,32 @@ class AuthController
         $this->usuarioRepo = new UsuarioRepo();
     }
 
-    public function getUser(): ?Usuario
-    {
-        return $this->user;
-    }
-
-    public function setUser(Usuario $user = null)
-    {
-        $this->user = $user;
-    }
-
     /**Autentica o usuario no banco
-     * @param array $requestData Array associativo com as credenciais do usuario
      * 
-     * @return string confirmação do login
-     * @return null usuario não encontrado
+     * @return userId id do usuario no banco
      */
-    public function login(array $requestData): ?string
+    public function auth()
     {
-        $canLogin = $this->validate($requestData);
+        $canLogin = $this->validate($_POST);
 
         if ($canLogin) {
-            $user = $this->usuarioRepo->auth($requestData);
+            $user = $this->usuarioRepo->auth($_POST);
 
             if (!empty($user)) {
-                $this->setUser($user);
-
-                return "Login efetuado";
-            } else {
-                return null;
+                $_SESSION['AUTH'] = $user->getId();
             }
-        } else {
-            return null;
         }
+
+        header('Location:userPage', true, 302);
+    }
+
+    public function login()
+    {
+        require dirname(dirname(__FILE__)) . '\Views\pages\login.php';
     }
 
     public function logout()
     {
-        $this->setUser(null);
         $_SESSION['AUTH'] = null;
     }
 

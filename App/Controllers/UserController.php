@@ -10,9 +10,9 @@ class UserController
 
     private $usuarioRepo;
 
-    public function __construct(mysqli $db)
+    public function __construct()
     {
-        $this->usuarioRepo = new UsuarioRepo($db);
+        $this->usuarioRepo = new UsuarioRepo();
     }
 
     public function create(array $userForm)
@@ -24,5 +24,12 @@ class UserController
         } else {
             return "Falha ao cadastrar usuario";
         }
+    }
+
+    public function getUser()
+    {
+        $user = $this->usuarioRepo->whereId($_SESSION['AUTH']);
+
+        require dirname(dirname(__FILE__)) . '\Views\pages\index.php';
     }
 }
