@@ -22,7 +22,7 @@
         <div class="shape"></div>
         <div class="shape"></div>
     </div>
-    <form action="index.php" method="POST">
+    <form action="auth" method="POST">
         <h3>Login Here</h3>
 
         <label for="email">Email></label>
@@ -32,10 +32,6 @@
         <input type="password" placeholder="Password" id="password" name="password">
 
         <button>Log In</button>
-        <!-- <div class="social">
-            <div class="go"><i class="fab fa-google"></i> Google</div>
-            <div class="fb"><i class="fab fa-facebook"></i> Facebook</div>
-        </div> -->
     </form>
 </body>
 
