@@ -1,5 +1,5 @@
 INSERT INTO
-    `cidade` (`id`, `name`, `estado_id`)
+    `cidade` (`id`, `nome`, `estado_id`)
 VALUES
     (1, 'Salvador', 1),
     (2, 'Feira de Santana', 1),

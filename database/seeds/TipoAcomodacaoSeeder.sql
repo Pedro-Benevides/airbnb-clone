@@ -1,5 +1,5 @@
 INSERT INTO
-    `tipo_acomodacao` (`id`, `name`)
+    `tipo_acomodacao` (`id`, `nome`)
 VALUES
     (1, 'Casa '),
     (2, 'Quarto'),
