@@ -5,6 +5,7 @@ namespace App\Models;
 /**
  * Class Usuario
  *
+ * @property string $id
  * @property string $nome
  * @property string $cpf
  * @property string $email
@@ -16,6 +17,7 @@ namespace App\Models;
  */
 class Usuario
 {
+    private $id;
     private $nome;
     private $cpf;
     private $email;
@@ -132,6 +134,26 @@ class Usuario
     public function setTelefone(string $telefone)
     {
         $this->telefone = $telefone;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
 
         return $this;
     }
