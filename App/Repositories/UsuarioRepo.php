@@ -59,9 +59,27 @@ class UsuarioRepo extends BaseRepository
             )
         )->fetch(PDO::FETCH_ASSOC);
 
-        $user = $this->buildUsuario($result);
+        if ($result) {
+            $user = $this->buildUsuario($result);
 
-        return $user;
+            return $user;
+        } else {
+            return null;
+        }
+    }
+
+    public function whereId(int $id): ?Usuario
+    {
+        $db = Connection::Connect();
+        $result = $db->query(
+            $this->search(
+                ' id ',
+                ' = ',
+                $id
+            )
+        )->fetch(PDO::FETCH_ASSOC);
+
+        return $this->buildUsuario($result);
     }
 
     private function buildUsuario($queryResult)
@@ -70,7 +88,7 @@ class UsuarioRepo extends BaseRepository
 
         $queryResult['pais'] = $userPais;
 
-        return new Usuario(
+        $user = new Usuario(
             $queryResult['nome'],
             $queryResult['cpf'],
             $queryResult['email'],
@@ -80,5 +98,9 @@ class UsuarioRepo extends BaseRepository
             $queryResult['anfitriao'],
             $queryResult['locatario'],
         );
+
+        $user->setId($queryResult['id']);
+
+        return  $user;
     }
 }
