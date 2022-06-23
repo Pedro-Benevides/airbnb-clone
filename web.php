@@ -21,6 +21,21 @@ if (isset($_GET['url'])) //se estiver preenchida, pega o valor
 			$userController = new UserController();
 			$userController->getUser();
 			break;
+		case "ACCOMMODATIONFORM":
+			require "App/Controllers/AcomodacaoController.php";
+			$acomodacaoController = new AcomodacaoController();
+			$acomodacaoController->form();
+			break;
+		case "ACCOMMODATIONREGISTER":
+			require "App/Controllers/AcomodacaoController.php";
+			$acomodacaoController = new AcomodacaoController();
+			$acomodacaoController->create($_POST);
+			break;
+		case "ACCOMMODATIONPAGE":
+			require "App/Controllers/AcomodacaoController.php";
+			$acomodacaoController = new AcomodacaoController();
+			$acomodacaoController->getAcomodacao();
+			break;
 		default:
 			break;
 	}
