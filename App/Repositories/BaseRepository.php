@@ -30,7 +30,9 @@ class BaseRepository
     protected function insert(array $columns, array $values)
     {
         $columnsFormat = implode(', ', $columns);
-        $valuesFormat = implode(', ', $values);
+        $valuesFormat = implode(', ', array_map(function ($value) {
+            return '\'' . $value . '\'';
+        }, $values));
 
         return $this->insert . " ({$columnsFormat}) " . ' VALUES ' . " ({$valuesFormat}) ";
     }
