@@ -5,6 +5,9 @@ namespace App\Repositories;
 require_once dirname(dirname(dirname(__FILE__))) . '\database\config\connection.php';
 require_once dirname(dirname(__FILE__)) . '\Models\Acomodacao.php';
 require_once 'BaseRepository.php';
+require_once 'UsuarioRepo.php';
+require_once 'CidadeRepo.php';
+require_once 'TipoAcomodacaoRepo.php';
 
 use App\Models\Acomodacao;
 use App\Repositories\BaseRepository;
@@ -13,24 +16,34 @@ use PDO;
 
 class AcomodacaoRepo extends BaseRepository
 {
+    private $usuarioRepo;
+    private $cidadeRepo;
+    private $tipoAcomodacaoRepo;
+
     public function __construct()
     {
+        $this->cidadeRepo = new CidadeRepo();
+        $this->usuarioRepo = new UsuarioRepo();
+        $this->tipoAcomodacaoRepo = new TipoAcomodacaoRepo();
         parent::__construct('acomodacao');
     }
 
     public function create(array $acomodacaoForm)
     {
+        $acomodacaoForm['usuario_id'] = $_SESSION['AUTH'];
+
         $db = Connection::Connect();
         $columns = array_keys($acomodacaoForm);
         $values = array_values($acomodacaoForm);
 
-        return
-            $db->query(
-                $this->insert($columns, $values)
-            );
+        $db->query(
+            $this->insert($columns, $values)
+        );
+
+        return $db->lastInsertId();
     }
 
-    public function get(int $id): ?Acomodacao
+    public function whereId(int $id): ?Acomodacao
     {
         $db = Connection::Connect();
         $result = $db->query(
@@ -43,27 +56,37 @@ class AcomodacaoRepo extends BaseRepository
 
         $acomodacaoArray = $this->buildAcomodacao($result);
 
-        return array_shift($acomodacaoArray);
+        return $acomodacaoArray;
     }
 
     private function buildAcomodacao($queryResult)
     {
-        return array_map(function ($row) {
-            return new Acomodacao(
-                $row['cep'],
-                $row['rua'],
-                $row['numero'],
-                $row['cidade'],
-                $row['estado'],
-                $row['pais'],
-                $row['diaria'],
-                $row['capacidade'],
-                $row['complemento'],
-                $row['descricao'],
-                $row['imagemInterior'],
-                $row['imagemFrontal'],
-                $row['imagemAdicional']
-            );
-        }, $queryResult);
+        $proprietario = $this->usuarioRepo->whereId($queryResult['usuario_id']);
+        $cidade = $this->cidadeRepo->whereId($queryResult['cidade_id']);
+        $tipo = $this->tipoAcomodacaoRepo->whereId($queryResult['tipo_acomodacao_id']);
+
+        $queryResult['cidade'] = $cidade;
+        $queryResult['tipo'] = $tipo;
+        $queryResult['proprietario'] = $proprietario;
+
+        $acomodacao =  new Acomodacao(
+            $queryResult['proprietario'],
+            $queryResult['diaria'],
+            $queryResult['capacidade'],
+            $queryResult['cep'],
+            $queryResult['rua'],
+            $queryResult['numero'],
+            $queryResult['cidade'],
+            $queryResult['tipo'],
+            $queryResult['complemento'],
+            $queryResult['imagem_interior'],
+            $queryResult['imagem_frontal'],
+            $queryResult['imagem_adicional'],
+            $queryResult['descricao']
+        );
+
+        $acomodacao->setId($queryResult['id']);
+
+        return $acomodacao;
     }
 }
