@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
   <!-- Link Css -->
   <style type="text/css">
-    <?php require dirname(dirname(__FILE__)) . '\styles\accomodationRegister.php'; ?>
+    <?php require dirname(dirname(__FILE__)) . '\styles\accommodationRegister.php'; ?>
   </style>
 
 </head>
@@ -27,7 +27,7 @@
     <div class="top-row">
       <div class="field-wrap">
         <label for="Cidade">Cidade: </label>
-        <select class="" name="Cidade" name="cidade_id">
+        <select class="" name="cidade_id">
           <option value="0" selected>Cidade</option>
           <option value="1">Salvador</option>
 
@@ -53,7 +53,7 @@
 
       <div class="field-wrap">
         <label for="Complemento">Complemento: </label>
-        <input type="text" placeholder="Complemento" name="complemento" required>
+        <input type="text" placeholder="Complemento" name="complemento">
       </div>
 
     </div>
@@ -61,7 +61,7 @@
     <div class="top-row">
       <div class="field-wrap">
         <label for="Categoria">Categoria: </label>
-        <select class="" name="tipo_acomodacao_id" id="tipo_acomodacao_id">
+        <select class="" name="tipo_acomodacao_id" id="tipo_acomodacao_id" required>
           <option value="0" selected>Categoria</option>
           <option value="1">Casa</option>
           <option value="2">Quarto</option>
@@ -79,7 +79,7 @@
 
       <div class="field-wrap">
         <label for="Descição">Descição: </label>
-        <input type="text" placeholder="Descição" name="descricao" required>
+        <input type="text" placeholder="Descição" name="descricao">
       </div>
 
       <div class="field-wrap">
@@ -91,17 +91,17 @@
     <div class="top-row">
       <div class="field-wrap">
         <label for="Imagem">Imagem Interior: </label>
-        <input type="file" placeholder="Imagem Interior" name="imagem_interior" required>
+        <input type="file" placeholder="Imagem Interior" name="imagem_interior">
       </div>
 
       <div class="field-wrap">
         <label for="Imagem Frontal">Imagem Frontal: </label>
-        <input type="file" placeholder="Imagem Frontal" name="imagem_frontal" required>
+        <input type="file" placeholder="Imagem Frontal" name="imagem_frontal">
       </div>
 
       <div class="field-wrap">
         <label for="Imagem Adicional">Imagem Adicional: </label>
-        <input type="file" placeholder="Imagem Adicional" name="imagem_adicional" required>
+        <input type="file" placeholder="Imagem Adicional" name="imagem_adicional">
       </div>
     </div>
 
