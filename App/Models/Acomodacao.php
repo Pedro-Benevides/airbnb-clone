@@ -24,6 +24,7 @@ namespace App\Models;
  */
 class Acomodacao
 {
+    private $id;
     private $proprietario;
     private $tipoAcomodacao;
     private $cep;
@@ -307,6 +308,26 @@ class Acomodacao
     public function setTipoAcomodacao(TipoAcomodacao $tipoAcomodacao)
     {
         $this->tipoAcomodacao = $tipoAcomodacao;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
 
         return $this;
     }
