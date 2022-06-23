@@ -23,12 +23,12 @@ class AcomodacaoController
     {
         $newAcomodacaoId = $this->acomodacaoRepo->create($acomodacaoForm);
 
-        header('Location:accommodationPage\?accommodation=' . `{$newAcomodacaoId}`, true, 302);
+        header('Location:accommodationPage', true, 302);
     }
 
     public function getAcomodacao()
     {
-        $acomodacao = $this->acomodacaoRepo->whereId($_GET['accommodation']);
+        $acomodacao = $this->acomodacaoRepo->whereId(0);
 
         require dirname(dirname(__FILE__)) . '\Views\pages\accommodationDetails.php';
     }
