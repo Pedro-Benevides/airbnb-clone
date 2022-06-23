@@ -101,6 +101,6 @@ class UsuarioRepo extends BaseRepository
 
         $user->setId($queryResult['id']);
 
-        return  $user;
+        return $user;
     }
 }
