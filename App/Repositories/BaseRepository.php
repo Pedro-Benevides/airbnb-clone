@@ -21,7 +21,9 @@ class BaseRepository
     private function select($columns)
     {
         if (is_array($columns)) {
-            return implode(', ', $columns);
+            return implode(', ', array_map(function ($column) {
+                return '\'' . $column . '\'';
+            }, $columns));
         } else {
             return $columns = 'select * ';
         }
@@ -49,6 +51,11 @@ class BaseRepository
     protected function search(string $column, string $operator, string $value, $selectColumns = null)
     {
         return $this->select($selectColumns) . $this->from . $this->where($column, $operator, $value);
+    }
+
+    protected function all()
+    {
+        return $this->select('*') . $this->from;
     }
 
     protected function update(string $setColumn, string $whereColumn, string $setValue, string $whereValue)
