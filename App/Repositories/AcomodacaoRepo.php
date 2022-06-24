@@ -43,6 +43,20 @@ class AcomodacaoRepo extends BaseRepository
         return $db->lastInsertId();
     }
 
+    public function all(): ?array
+    {
+        $db = Connection::Connect();
+        $result = $db->query(
+            $this->all()
+        )->fetch(PDO::FETCH_ASSOC);
+
+        $acomodacaoArray = array_map(function ($dbAcomodacao) {
+            $this->buildAcomodacao($dbAcomodacao);
+        }, $result);
+
+        return $acomodacaoArray;
+    }
+
     public function whereId(int $id): ?Acomodacao
     {
         $db = Connection::Connect();

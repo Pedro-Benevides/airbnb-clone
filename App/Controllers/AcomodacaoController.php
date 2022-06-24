@@ -19,6 +19,13 @@ class AcomodacaoController
         require dirname(dirname(__FILE__)) . '\Views\pages\accommodationRegister.php';
     }
 
+    public function list()
+    {
+        $acomodacoes = $this->acomodacaoRepo->all();
+
+        require dirname(dirname(__FILE__)) . '\Views\pages\accommodationList.php';
+    }
+
     public function create(array $acomodacaoForm)
     {
         $newAcomodacaoId = $this->acomodacaoRepo->create($acomodacaoForm);
