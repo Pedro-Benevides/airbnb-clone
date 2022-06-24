@@ -34,7 +34,12 @@ if (isset($_GET['url'])) //se estiver preenchida, pega o valor
 		case "ACCOMMODATIONPAGE":
 			require "App/Controllers/AcomodacaoController.php";
 			$acomodacaoController = new AcomodacaoController();
-			$acomodacaoController->getAcomodacao();
+			$acomodacaoController->getAcomodacao($_POST);
+			break;
+		case "ACCOMMODATIONLIST":
+			require "App/Controllers/AcomodacaoController.php";
+			$acomodacaoController = new AcomodacaoController();
+			$acomodacaoController->list();
 			break;
 		default:
 			break;
