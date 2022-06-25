@@ -16,7 +16,7 @@ class TipoAcomodacaoRepo extends BaseRepository
 
     public function __construct()
     {
-        parent::__construct('pais');
+        parent::__construct('tipo_acomodacao');
     }
 
     public function whereId(int $id): ?TipoAcomodacao
@@ -36,7 +36,7 @@ class TipoAcomodacaoRepo extends BaseRepository
     private function buildTipoAcomodacao($queryResult)
     {
         return new TipoAcomodacao(
-            $queryResult['nome']
+            $queryResult['descricao']
         );
     }
 }
