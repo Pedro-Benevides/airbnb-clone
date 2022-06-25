@@ -42,93 +42,93 @@
 
 
     <div class="container-search">
-        <form>
+        <form action="filterList" method="POST">
             <select>
-                <option selected value="0">City</option>
+                <option selected value="0">Cidade</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">2</option>
             </select>
 
             <select>
-                <option selected value="0">State</option>
+                <option selected value="0">Categoria</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
             </select>
 
             <select>
-                <option selected value="0">Category</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-            </select>
-
-            <select>
-                <option selected value="0">Value Diary</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-            </select>
-
-            <select>
-                <option selected value="0">Comfort 1</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">2</option>
-            </select>
-
-            <select>
-                <option selected value="0">Comfort 2</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-            </select>
-
-            <select>
-                <option selected value="0">Comfort 3</option>
+                <option selected value="0">Valor da Diária</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
             </select>
 
             <button>Search</button>
+
+            <select>
+                <option selected value="0">Conforto 1</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">2</option>
+            </select>
+
+            <select>
+                <option selected value="0">Conforto 2</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+
+            <select>
+                <option selected value="0">Conforto 3</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+
         </form>
     </div>
-
-
 
     <main>
         <ul class="product-list">
             <li class="product-item">
                 <a href="accommodationDetails.html" target="_blank" class="product-link">
-                    <figure class="product-info">
-                        <div class="product-info-img">
-                            <img src="../img/tower city.jpg" alt="description image">
-                        </div>
-                        <figcaption class="product-info-description">
-                            <h2 class="title">Tower City</h2>
+                    <?php
+                    foreach ($acomodacoes as $acomodacao) {
 
-                            <p class="description">aconchegante com uma grande variedade de plantas, espaço ventilado..</p>
-                            <ul class="description">
-                                <li>Ar Condicionado</li>
-                                <li>WI-FI</li>
-                                <li>Jacuzzi</li>
-                                <li>2 Camas</li>
-                            </ul>
-                        </figcaption>
-                        <div class="price-box">
-                            <div class="price">
-                                <div>
-                                    <del>R$210,00</del>
-                                    <ins class="d-block">R$200,00</ins>
-                                </div>
-
+                    ?>
+                        <figure class="product-info">
+                            <div class="product-info-img">
+                                <img src="<?php echo $acomodacao->getImagemFrontal(); ?>" alt="description image">
                             </div>
-                            <button href="accommodationDetails" class="btn btn-buy">Reserva <i class="fas fa-arrow-right"></i></button>
-                        </div>
-                        </div>
-                    </figure>
+                            <figcaption class="product-info-description">
+                                <h2 class="title"><?php echo $acomodacao->getTipoAcomodacao()->getDescricao(); ?></h2>
+
+                                <p class="description"><?php echo $acomodacao->getDescricao(); ?></p>
+                                <ul class="description">
+                                    <li>Ar Condicionado</li>
+                                    <li>WI-FI</li>
+                                    <li>Jacuzzi</li>
+                                    <li>2 Camas</li>
+                                </ul>
+                            </figcaption>
+                            <div class="price-box">
+                                <div class="price">
+                                    <div>
+                                        <del>R$210,00</del>
+                                        <ins class="d-block"><?php echo $acomodacao->getDiaria() ?></ins>
+                                    </div>
+
+                                </div>
+                                <button href="accommodationDetails" class="btn btn-buy">Reserva <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                            </div>
+                        </figure>
+                    <?php
+                    }
+
+                    ?>
                 </a>
             </li>
 
