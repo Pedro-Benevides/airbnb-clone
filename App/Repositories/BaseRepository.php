@@ -12,20 +12,31 @@ class BaseRepository
 
     function __construct(string $tableName)
     {
-        $this->from = ' FROM ' . "`{$tableName}`";
-        $this->insert = 'INSERT INTO ' . "`{$tableName}`";
-        $this->delete = 'DELETE FROM ' . "`{$tableName}`" . ' WHERE ';
-        $this->update = 'UPDATE ' . "`{$tableName}`";
+        $schema = '`' . $_SESSION['DB_DATABASE'] . '`' . "." . "`{$tableName}`";
+        $this->from = ' FROM ' . $schema;
+        $this->insert = 'INSERT INTO ' . $schema;
+        $this->delete = 'DELETE FROM ' .  $schema . ' WHERE ';
+        $this->update = 'UPDATE ' . $schema;
     }
 
-    private function select($columns)
+    private function formatArrayValues(array $columns = null)
     {
         if (is_array($columns)) {
             return implode(', ', array_map(function ($column) {
                 return '\'' . $column . '\'';
             }, $columns));
         } else {
-            return $columns = 'select * ';
+            return null;
+        }
+    }
+
+    private function select($columns = null)
+    {
+        $columns = $this->formatArrayValues($columns);
+        if (!empty($columns)) {
+            return "select" . $columns;
+        } else {
+            return 'select * ';
         }
     }
 
@@ -53,14 +64,22 @@ class BaseRepository
         return $this->select($selectColumns) . $this->from . $this->where($column, $operator, $value);
     }
 
-    protected function all()
+    protected function getAll()
     {
-        return $this->select('*') . $this->from;
+        return $this->select() . $this->from;
     }
 
-    protected function update(string $setColumn, string $whereColumn, string $setValue, string $whereValue)
+    protected function update($setColumns, $setValue, string $whereColumn, string $whereValue)
     {
-        return $this->update . 'SET' . $setColumn . '=' . $setValue .  $this->where($whereColumn, '=', $whereValue);
+        if (is_array($setColumns)) {
+            $setColumns = $this->formatArrayValues($setColumns);
+        }
+
+        if (is_array($setValue)) {
+            $setValue = $this->formatArrayValues($setValue);
+        }
+
+        return $this->update . 'SET' . $setColumns . '=' . $setValue .  $this->where($whereColumn, '=', $whereValue);
     }
 
     protected function delete(string $column, string $operator, string $value)
