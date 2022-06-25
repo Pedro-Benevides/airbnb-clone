@@ -5,36 +5,36 @@ namespace App\Models;
 /**
  * Class TipoAcomodacao
  *
- * @property string $nome
+ * @property string $descricao
  *
  * @package App\Models
  */
 
 class TipoAcomodacao
 {
-    private $nome;
+    private $descricao;
 
-    public function __construct(string $nome)
+    public function __construct(string $descricao)
     {
-        $this->nome = ucwords($nome);
+        $this->descricao = ucwords($descricao);
     }
 
     /**
-     * Get the value of nome
+     * Get the value of descricao
      */
-    public function getTipo(): string
+    public function getDescricao(): string
     {
-        return $this->nome;
+        return $this->descricao;
     }
 
     /**
-     * Set the value of nome
+     * Set the value of descricao
      *
      * @return  self
      */
-    public function setTipo(string $nome)
+    public function setDescricao(string $descricao)
     {
-        $this->nome = $nome;
+        $this->descricao = $descricao;
 
         return $this;
     }
