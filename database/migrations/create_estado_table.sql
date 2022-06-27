@@ -1,6 +1,6 @@
 -- DROP TABLE IF EXISTS `airbnb-clone`.`estado` ;
 CREATE TABLE IF NOT EXISTS `airbnb-clone`.`estado` (
-    `id` INT NOT NULL,
+    `id` INT NOT NULL AUTO_INCREMENT,
     `nome` VARCHAR(45) NOT NULL,
     `pais_id` INT NOT NULL,
     PRIMARY KEY (`id`),

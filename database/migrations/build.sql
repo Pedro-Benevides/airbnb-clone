@@ -24,7 +24,7 @@ USE `airbnb-clone` ;
 DROP TABLE IF EXISTS `airbnb-clone`.`pais` ;
 
 CREATE TABLE IF NOT EXISTS `airbnb-clone`.`pais` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -60,7 +60,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `airbnb-clone`.`tipo_acomodacao` ;
 
 CREATE TABLE IF NOT EXISTS `airbnb-clone`.`tipo_acomodacao` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `descricao` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -72,7 +72,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `airbnb-clone`.`estado` ;
 
 CREATE TABLE IF NOT EXISTS `airbnb-clone`.`estado` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
   `pais_id` INT NOT NULL,
   PRIMARY KEY (`id`),
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `airbnb-clone`.`estado` (
 DROP TABLE IF EXISTS `airbnb-clone`.`cidade` ;
 
 CREATE TABLE IF NOT EXISTS `airbnb-clone`.`cidade` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
   `estado_id` INT NOT NULL,
   PRIMARY KEY (`id`),
@@ -107,7 +107,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `airbnb-clone`.`acomodacao` ;
 
 CREATE TABLE IF NOT EXISTS `airbnb-clone`.`acomodacao` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `tipo_acomodacao_id` INT NOT NULL,
   `usuario_id` INT NOT NULL,
   `cidade_id` INT NOT NULL,
@@ -168,7 +168,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `airbnb-clone`.`anuncio` ;
 
 CREATE TABLE IF NOT EXISTS `airbnb-clone`.`anuncio` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `acomodacao_id` INT NOT NULL,
   `data_inicio` DATETIME NOT NULL,
   `data_fim` DATETIME NOT NULL,
@@ -188,7 +188,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `airbnb-clone`.`locacao` ;
 
 CREATE TABLE IF NOT EXISTS `airbnb-clone`.`locacao` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `usuario_locatario_id` INT NOT NULL,
   `acomodacao_id` INT NOT NULL,
   `valor` DECIMAL NOT NULL,
@@ -217,7 +217,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `airbnb-clone`.`cartao` ;
 
 CREATE TABLE IF NOT EXISTS `airbnb-clone`.`cartao` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `numero` VARCHAR(45) NOT NULL,
   `titular` VARCHAR(45) NOT NULL,
   `vencimento` DATE NOT NULL,
@@ -238,7 +238,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `airbnb-clone`.`conforto` ;
 
 CREATE TABLE IF NOT EXISTS `airbnb-clone`.`conforto` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `descricao` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
