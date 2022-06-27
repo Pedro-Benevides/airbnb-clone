@@ -30,15 +30,15 @@ class UserController
         $user = $this->usuarioRepo->create($_POST);
 
         if ($user) {
-            return "<br> Usuario cadastrado com sucesso!";
+            require dirname(dirname(__FILE__)) . '\Views\pages\login.php';
         } else {
-            return "Falha ao cadastrar usuario";
+            return dirname(dirname(__FILE__)) . '\Views\pages\error500.php';;
         }
     }
 
     public function getUser()
     {
-        $user = $this->usuarioRepo->whereId($_SESSION['AUTH']);
+        $userAuth = $this->usuarioRepo->whereId($_SESSION['AUTH']);
 
         require dirname(dirname(__FILE__)) . '\Views\pages\index.php';
     }
