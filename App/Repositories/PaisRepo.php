@@ -33,6 +33,13 @@ class PaisRepo extends BaseRepository
         return $this->buildPais($result);
     }
 
+    public function getAll(): ?array
+    {
+        $db = Connection::Connect();
+
+        return $db->query($this->search())->fetch(PDO::FETCH_ASSOC);
+    }
+
     private function buildPais($queryResult)
     {
         return new Pais(
