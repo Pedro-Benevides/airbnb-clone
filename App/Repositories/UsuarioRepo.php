@@ -25,6 +25,8 @@ class UsuarioRepo extends BaseRepository
 
     public function create(array $userForm)
     {
+        $userForm['password'] = $this->formatPassword($userForm['password']);
+
         $db = Connection::Connect();
         $columns = array_keys($userForm);
         $values = array_values($userForm);
@@ -102,5 +104,18 @@ class UsuarioRepo extends BaseRepository
         $user->setId($queryResult['id']);
 
         return  $user;
+    }
+
+    private function formatPassword($password)
+    {
+        return md5(
+            htmlspecialchars(
+                stripslashes(
+                    trim(
+                        $password
+                    )
+                )
+            )
+        );
     }
 }
