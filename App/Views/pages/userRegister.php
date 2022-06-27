@@ -63,34 +63,34 @@
     </div>
 
     <div class="register">
-      <form>
+      <form action="userRegister" method="POST">
         <h3>Register Here</h3>
 
-        <label for="username">Nome</label>
-        <input type="text" placeholder="Nome" name="username" required>
+        <label for="username">Nome:</label>
+        <input type="text" placeholder="Nome" name="nome" required>
 
         <label for="email">Email: </label>
         <input type="email" placeholder="Email" name="email" onblur="validacaoEmail(f1.email)" maxlength="60" size='65' required>
 
-        <label for="cpf">CPF</label>
+        <label for="cpf">CPF:</label>
         <input type="text" placeholder="CPF" name="cpf" required>
 
-        <label for="telefone">Telefone</label>
-        <input type="text" placeholder="+xx (xx) xxxx-xxxx" name="telefone" required>
+        <label for="telefone">Telefone:</label>
+        <input type="text" placeholder="telefone" name="telefone" required>
 
         <label for="country">País</label>
         <select color="black" name="pais_id">
           <option value="0" selected>Pais</option>
           <?php foreach ($paises as $pais) { ?>
-            <option value="<?php echo $pais->getId(); ?>"><?php echo $pais->getNome(); ?>"</option>
+            <option value="<?php echo $pais->getId(); ?>"><?php echo $pais->getNome(); ?></option>
           <?php }; ?>
         </select>
 
-        <label for="password">Password</label>
-        <input type="password" placeholder="Password" name="password" required>
+        <label for="senha">Senha:</label>
+        <input type="password" placeholder="Senha" name="senha" required>
 
-        <label for="password">Confirm Password</label>
-        <input type="password" placeholder="Confirm Password" required>
+        <label for="password">Confirmar Senha:</label>
+        <input type="password" placeholder="Confirmar Senha:" required>
 
         <button>Register</button>
         <div class="social">
