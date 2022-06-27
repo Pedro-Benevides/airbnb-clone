@@ -25,14 +25,17 @@ class UsuarioRepo extends BaseRepository
 
     public function create(array $userForm)
     {
+        $userForm['senha'] = $this->formatPassword($userForm['senha']);
+
         $db = Connection::Connect();
         $columns = array_keys($userForm);
         $values = array_values($userForm);
 
-        return
-            $db->query(
-                $this->insert($columns, $values)
-            );
+        $db->query(
+            $this->insert($columns, $values)
+        );
+
+        return $db->lastInsertId();
     }
 
     public function auth(array $credentials): ?Usuario
@@ -42,7 +45,9 @@ class UsuarioRepo extends BaseRepository
             $this->search(
                 ' email ',
                 ' = ',
-                $credentials['email']
+                $credentials['email'],
+                '*',
+                true
             ) . $this->where(
                 ' senha ',
                 ' = ',
@@ -102,5 +107,18 @@ class UsuarioRepo extends BaseRepository
         $user->setId($queryResult['id']);
 
         return $user;
+    }
+
+    private function formatPassword($password)
+    {
+        return md5(
+            htmlspecialchars(
+                stripslashes(
+                    trim(
+                        $password
+                    )
+                )
+            )
+        );
     }
 }

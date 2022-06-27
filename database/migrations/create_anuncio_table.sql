@@ -1,6 +1,6 @@
 -- DROP TABLE IF EXISTS `airbnb-clone`.`anuncio`;
 CREATE TABLE IF NOT EXISTS `airbnb-clone`.`anuncio` (
-    `id` INT NOT NULL,
+    `id` INT NOT NULL AUTO_INCREMENT,
     `acomodacao_id` INT NOT NULL,
     `data_inicio` DATETIME NOT NULL,
     `data_fim` DATETIME NOT NULL,

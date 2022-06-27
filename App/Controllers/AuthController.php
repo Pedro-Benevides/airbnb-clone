@@ -21,7 +21,6 @@ class AuthController
     public function auth()
     {
         $canLogin = $this->validate($_POST);
-
         if ($canLogin) {
             $user = $this->usuarioRepo->auth($_POST);
 
@@ -30,7 +29,7 @@ class AuthController
             }
         }
 
-        header('Location:userPage', true, 302);
+        require dirname(dirname(__FILE__)) . '\Views\pages\index.php';
     }
 
     public function login()

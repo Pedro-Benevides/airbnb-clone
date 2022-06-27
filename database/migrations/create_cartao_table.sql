@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS `airbnb-clone`.`cartao` (
-    `id` INT NOT NULL,
+    `id` INT NOT NULL AUTO_INCREMENT,
     `numero` VARCHAR(45) NOT NULL,
     `titular` VARCHAR(45) NOT NULL,
     `vencimento` DATE NOT NULL,
