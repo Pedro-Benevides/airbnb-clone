@@ -30,7 +30,14 @@ class BaseRepository
     protected function insert(array $columns, array $values)
     {
         $columnsFormat = implode(', ', $columns);
-        $valuesFormat = implode(', ', $values);
+
+        $valuesFormat = array_map(
+            function ($value) {
+                return '\'' . $value . '\'';
+            },
+            $values
+        );
+        $valuesFormat = implode(', ', $valuesFormat);
 
         return $this->insert . " ({$columnsFormat}) " . ' VALUES ' . " ({$valuesFormat}) ";
     }
@@ -44,9 +51,13 @@ class BaseRepository
         }
     }
 
-    protected function search(string $column, string $operator, string $value, $selectColumns = null)
+    protected function search(string $column = null, string $operator = null, string $value = null, $selectColumns = null, $addwhere = false)
     {
-        return $this->select($selectColumns) . $this->from . $this->where($column, $operator, $value);
+        if ($addwhere) {
+            return $this->select($selectColumns) . $this->from . $this->where($column, $operator, $value);
+        } else {
+            return $this->select($selectColumns) . $this->from;
+        }
     }
 
     protected function update(string $setColumn, string $whereColumn, string $setValue, string $whereValue)
