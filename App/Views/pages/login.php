@@ -27,11 +27,11 @@
     <form action="auth" method="POST">
         <h3>Login Here</h3>
 
-        <label for="email">Email></label>
+        <label for="email">Email:</label>
         <input type="email" placeholder="Email" id="email" name="email">
 
-        <label for="password">Password</label>
-        <input type="password" placeholder="Password" id="password" name="password">
+        <label for="password">Senha:</label>
+        <input type="password" placeholder="Senha" id="password" name="password">
 
         <button>Log In</button>
     </form>
