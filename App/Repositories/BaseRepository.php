@@ -69,17 +69,15 @@ class BaseRepository
         return $this->select() . $this->from;
     }
 
-    protected function update($setColumns, $setValue, string $whereColumn, string $whereValue)
+    protected function update($setColumns, array $setValue, string $whereColumn, string $whereValue)
     {
         if (is_array($setColumns)) {
-            $setColumns = $this->formatArrayValues($setColumns);
+            $setColumns = implode(', ', $setColumns);
         }
 
-        if (is_array($setValue)) {
-            $setValue = $this->formatArrayValues($setValue);
-        }
+        $setValue = $this->formatArrayValues($setValue);
 
-        return $this->update . 'SET' . $setColumns . '=' . $setValue .  $this->where($whereColumn, '=', $whereValue);
+        return $this->update . ' SET ' . $setColumns . ' = ' . $setValue .  $this->where($whereColumn, ' = ', $whereValue);
     }
 
     protected function delete(string $column, string $operator, string $value)
