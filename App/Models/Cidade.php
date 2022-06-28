@@ -15,6 +15,7 @@ class Cidade
 {
     private $nome;
     private $estado;
+    private $id;
 
     public function __construct(string $nome, Estado $estado)
     {
@@ -58,6 +59,26 @@ class Cidade
     public function setEstado(Estado $estado)
     {
         $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
 
         return $this;
     }

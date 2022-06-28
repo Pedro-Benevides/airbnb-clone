@@ -3,20 +3,20 @@
 namespace App\Repositories;
 
 require_once dirname(dirname(dirname(__FILE__))) . '\database\config\connection.php';
-require_once dirname(dirname(__FILE__)) . '\Models\TipoAcomodacao.php';
+require_once dirname(dirname(__FILE__)) . '\Models\Conforto.php';
 require_once 'BaseRepository.php';
 
-use App\Models\TipoAcomodacao;
+use App\Models\Conforto;
 use App\Repositories\BaseRepository;
 use Connection;
 use PDO;
 
-class TipoAcomodacaoRepo extends BaseRepository
+class ConfortoRepo extends BaseRepository
 {
 
     public function __construct()
     {
-        parent::__construct('tipo_acomodacao');
+        parent::__construct('conforto');
     }
 
     public function all()
@@ -24,18 +24,18 @@ class TipoAcomodacaoRepo extends BaseRepository
         $db = Connection::Connect();
         $results = $db->query($this->getAll());
 
-        $tipoAcomodacaoArray = array();
+        $confortoArray = array();
         $i = 0;
 
         while ($linha = $results->fetch(PDO::FETCH_ASSOC)) {
-            $tipoAcomodacaoArray[$i] = $this->buildTipoAcomodacao($linha);
+            $confortoArray[$i] = $this->buildConforto($linha);
             $i++;
         }
 
-        return $tipoAcomodacaoArray;
+        return $confortoArray;
     }
 
-    public function whereId(int $id): ?TipoAcomodacao
+    public function whereId(int $id): ?Conforto
     {
         $db = Connection::Connect();
         $result = $db->query(
@@ -46,17 +46,17 @@ class TipoAcomodacaoRepo extends BaseRepository
             )
         )->fetch(PDO::FETCH_ASSOC);
 
-        return $this->buildTipoAcomodacao($result);
+        return $this->buildConforto($result);
     }
 
-    private function buildTipoAcomodacao($queryResult)
+    private function buildConforto($queryResult)
     {
-        $tipo = new TipoAcomodacao(
+        $conforto = new Conforto(
             $queryResult['descricao']
         );
 
-        $tipo->setId($queryResult['id']);
+        $conforto->setId($queryResult['id']);
 
-        return $tipo;
+        return $conforto;
     }
 }
