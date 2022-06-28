@@ -31,8 +31,8 @@
                     <div class="column-xs-4 column-md-6">
                         <ul>
                             <li class="nav-item"><a href="login">Login</a></li>
-                            <li class="nav-item"><a href="register">Cadastro</a></li>
-                            <li class="nav-item"><a href="accommodationRegister">Cadastro de acomodações</a></li>
+                            <li class="nav-item"><a href="userForm">Cadastro</a></li>
+                            <li class="nav-item"><a href="accommodationForm">Cadastro de acomodações</a></li>
                         </ul>
                     </div>
                 </div>
@@ -45,59 +45,60 @@
         <form action="filterList" method="POST">
             <select>
                 <option selected value="0">Cidade</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">2</option>
+                <?php foreach ($cidades as $cidade) { ?>
+                    <option value="<?php echo $cidade->getId(); ?>"><?php echo $cidade->getNome(); ?></option>
+                <?php }; ?>
             </select>
 
             <select>
                 <option selected value="0">Categoria</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
+                <?php foreach ($tipos as $tipo) { ?>
+                    <option value="<?php echo $tipo->getId(); ?>"><?php echo $tipo->getDescricao(); ?></option>
+                <?php }; ?>
             </select>
 
             <select>
                 <option selected value="0">Valor da Diária</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
+                <option value="1">0-50</option>
+                <option value="2">50-100</option>
+                <option value="3">100-300</option>
             </select>
 
-            <button>Search</button>
+            </br>
 
             <select>
                 <option selected value="0">Conforto 1</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">2</option>
+                <?php foreach ($confortos as $conforto) { ?>
+                    <option value="<?php echo $conforto->getId(); ?>"><?php echo $conforto->getDescricao(); ?></option>
+                <?php }; ?>
             </select>
 
             <select>
                 <option selected value="0">Conforto 2</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
+                <?php foreach ($confortos as $conforto) { ?>
+                    <option value="<?php echo $conforto->getId(); ?>"><?php echo $conforto->getDescricao(); ?></option>
+                <?php }; ?>
             </select>
 
             <select>
                 <option selected value="0">Conforto 3</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
+                <?php foreach ($confortos as $conforto) { ?>
+                    <option value="<?php echo $conforto->getId(); ?>"><?php echo $conforto->getDescricao(); ?></option>
+                <?php }; ?>
             </select>
 
+            <button>Search</button>
         </form>
     </div>
 
     <main>
         <ul class="product-list">
-            <li class="product-item">
-                <a href="accommodationDetails.html" target="_blank" class="product-link">
-                    <?php
-                    foreach ($acomodacoes as $acomodacao) {
+            <?php
+            foreach ($acomodacoes as $acomodacao) {
 
-                    ?>
+            ?>
+                <li class="product-item">
+                    <a href="accommodationDetails" target="_blank" class="product-link">
                         <figure class="product-info">
                             <div class="product-info-img">
                                 <img src="<?php echo $acomodacao->getImagemFrontal(); ?>" alt="description image">
@@ -107,6 +108,7 @@
 
                                 <p class="description"><?php echo $acomodacao->getDescricao(); ?></p>
                                 <ul class="description">
+                                    <!-- TODO: Confortos da acomodacao -->
                                     <li>Ar Condicionado</li>
                                     <li>WI-FI</li>
                                     <li>Jacuzzi</li>
@@ -125,12 +127,12 @@
                             </div>
                             </div>
                         </figure>
-                    <?php
-                    }
+                    </a>
+                </li>
+            <?php
+            }
 
-                    ?>
-                </a>
-            </li>
+            ?>
 
 
         </ul>
