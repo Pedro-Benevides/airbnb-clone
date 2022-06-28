@@ -42,35 +42,7 @@ class AcomodacaoRepo extends BaseRepository
 
         $lastId  = $db->lastInsertId();
 
-        $imagemInterior = $_FILES['imagem_interior'];
-        $imagemAdicional = $_FILES['imagem_adicional'];
-        $imagemFrontal = $_FILES['imagem_frontal'];
-        var_dump($imagemInterior);
-        if (!empty($imagemInterior) || !empty($imagemAdicional) || !empty($imagemFrontal)) {
-            // echo "entrou no if da imagem !=null";
-            //defini o nome do novo arquivo, que será o id gerado para o livro
-            $interiorNomeFinal = 'Interior' . $lastId . '.jpg';
-            $adicionalNomeFinal = 'Adicional' . $lastId . '.jpg';
-            $frontalNomeFinal = 'FrontalF' . $lastId . '.jpg';
-            //move o arquivo para a pasta atual com esse novo nome
-            if (
-                move_uploaded_file($imagemInterior['tmp_name'], dirname(dirname(__FILE__)) . '\Views\assets\\' . $interiorNomeFinal) ||
-                move_uploaded_file($imagemFrontal['tmp_name'], dirname(dirname(__FILE__)) . '\Views\assets\\' . $frontalNomeFinal) ||
-                move_uploaded_file($imagemAdicional['tmp_name'], dirname(dirname(__FILE__)) . '\Views\assets\\' . $adicionalNomeFinal)
-            ) {
-                // echo "Copiou a imagem";
-                //atualiza o banco de dados para guardar o nome do arquivo gerado.
-                $db->query(
-                    $this->update(
-                        ['imagem_interior', 'imagem_adicional', 'imagem_frontal'],
-                        [$imagemInterior, $imagemAdicional, $imagemFrontal],
-                        'id',
-                        $lastId
-                    )
-                );
-                // echo "atulizou o nome da imagem no bd";
-            }
-        }
+        $this->imageResolver($lastId);
 
         return $lastId;
     }
@@ -78,15 +50,15 @@ class AcomodacaoRepo extends BaseRepository
     public function all()
     {
         $db = Connection::Connect();
-        $result = array($db->query($this->getAll())->fetch(PDO::FETCH_ASSOC));
+        $results = $db->query($this->getAll());
 
-        $acomodacaoArray = array_map(function ($dbAcomodacao) {
-            if (is_array($dbAcomodacao)) {
-                return $this->buildAcomodacao($dbAcomodacao);
-            } else {
-                return array();
-            }
-        }, $result);
+        $acomodacaoArray = array();
+        $i = 0;
+
+        while ($linha = $results->fetch(PDO::FETCH_ASSOC)) {
+            $acomodacaoArray[$i] = $this->buildAcomodacao($linha);
+            $i++;
+        }
 
         return $acomodacaoArray;
     }
@@ -136,5 +108,51 @@ class AcomodacaoRepo extends BaseRepository
         $acomodacao->setId($queryResult['id']);
 
         return $acomodacao;
+    }
+
+    private function imageResolver(int $lastId)
+    {
+        $db = Connection::Connect();
+
+        $imagemInterior = $_FILES['imagem_interior'];
+        $imagemAdicional = $_FILES['imagem_adicional'];
+        $imagemFrontal = $_FILES['imagem_frontal'];
+
+        if (
+            !empty($imagemInterior)
+            ||
+            !empty($imagemAdicional)
+            ||
+            !empty($imagemFrontal)
+        ) {
+            $interiorNomeFinal = 'Interior' . $lastId . '.jpg';
+            $adicionalNomeFinal = 'Adicional' . $lastId . '.jpg';
+            $frontalNomeFinal = 'FrontalF' . $lastId . '.jpg';
+
+            if (
+                move_uploaded_file($imagemInterior['tmp_name'], dirname(dirname(__FILE__)) . '\Views\assets\\' . $interiorNomeFinal)
+                ||
+                move_uploaded_file($imagemFrontal['tmp_name'], dirname(dirname(__FILE__)) . '\Views\assets\\' . $frontalNomeFinal)
+                ||
+                move_uploaded_file($imagemAdicional['tmp_name'], dirname(dirname(__FILE__)) . '\Views\assets\\' . $adicionalNomeFinal)
+            ) {
+                $db->query(
+                    $this->update(
+                        [
+                            'imagem_interior',
+                            'imagem_adicional',
+                            'imagem_frontal'
+                        ],
+                        [
+                            $interiorNomeFinal,
+                            $imagemAdicional,
+                            $imagemFrontal
+                        ],
+                        'id',
+                        $lastId
+                    )
+                );
+            }
+        }
     }
 }
