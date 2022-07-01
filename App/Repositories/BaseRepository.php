@@ -9,6 +9,7 @@ class BaseRepository
     private $insert;
     private $delete;
     private $update;
+    private $schema;
 
     function __construct(string $tableName)
     {
@@ -17,14 +18,15 @@ class BaseRepository
         $this->insert = 'INSERT INTO ' . $schema;
         $this->delete = 'DELETE FROM ' .  $schema . ' WHERE ';
         $this->update = 'UPDATE ' . $schema;
+        $this->schema = $schema;
     }
 
-    private function formatArrayValues(array $columns = null)
+    private function formatArrayValues(array $values = null)
     {
-        if (is_array($columns)) {
-            return implode(', ', array_map(function ($column) {
-                return '\'' . $column . '\'';
-            }, $columns));
+        if (is_array($values)) {
+            return implode(', ', array_map(function ($value) {
+                return '\'' . $value . '\'';
+            }, $values));
         } else {
             return null;
         }
@@ -59,14 +61,23 @@ class BaseRepository
         }
     }
 
+    protected function whereIn(string $column, array $values, string $logicOperator = null)
+    {
+        if ($logicOperator) {
+            return $logicOperator . $column . ' IN ' .  " ({$this->formatArrayValues($values)}) ";
+        } else {
+            return ' WHERE ' . $column . ' IN ' . " ({$this->formatArrayValues($values)}) ";
+        }
+    }
+
     protected function search(string $column, string $operator, string $value, $selectColumns = null)
     {
         return $this->select($selectColumns) . $this->from . $this->where($column, $operator, $value);
     }
 
-    protected function getAll()
+    protected function getAll($columns = null)
     {
-        return $this->select() . $this->from;
+        return $this->select($columns) . $this->from;
     }
 
     protected function update($setColumns, array $setValue, string $whereColumn, string $whereValue)
@@ -83,5 +94,21 @@ class BaseRepository
     protected function delete(string $column, string $operator, string $value)
     {
         return $this->delete . $this->where($column, $operator, $value);
+    }
+
+    protected function join(string $table, string $joinColumn, string $fkColumn)
+    {
+        return ' JOIN ' . $table . ' ON ' . $joinColumn . ' = ' . $fkColumn;
+    }
+
+    protected function groupBy(string $column, $thisTable = false)
+    {
+        $groupQuery = ' GROUP BY ' . $column;
+
+        if ($thisTable) {
+            $groupQuery = ' GROUP BY ' . $this->schema . "." . $column;
+        }
+
+        return $groupQuery;
     }
 }
