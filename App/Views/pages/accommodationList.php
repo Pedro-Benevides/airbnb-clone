@@ -98,7 +98,7 @@
 
             ?>
                 <li class="product-item">
-                    <a href="accommodationDetails" target="_blank" class="product-link">
+                    <a href="<?php echo 'accommodationPage?accommodation=' . $acomodacao->getId(); ?>" target="_blank" class="product-link">
                         <figure class="product-info">
                             <div class="product-info-img">
                                 <img src="<?php echo $acomodacao->getImagemFrontal(); ?>" alt="description image">
@@ -121,7 +121,7 @@
                                     </div>
 
                                 </div>
-                                <button href="accommodationDetails" class="btn btn-buy">Reserva <i class="fas fa-arrow-right"></i></button>
+                                <button href="<?php header('Location:accommodationPage?accommodation=' . $acomodacao->getId(), true, 302); ?>" class="btn btn-buy">Reserva <i class="fas fa-arrow-right"></i></button>
                             </div>
                             </div>
                         </figure>

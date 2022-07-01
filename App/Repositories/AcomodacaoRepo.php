@@ -193,7 +193,7 @@ class AcomodacaoRepo extends BaseRepository
                 if ($hasWhere) {
                     $and =  ' and ';
                 }
-                $baseQuery .= $this->where(' cidade_id ',  ' = ', $filters['cidade_id']);
+                $baseQuery .= $this->where(' cidade_id ',  ' = ', $filters['cidade_id'], $and);
                 $hasWhere = true;
             }
 
@@ -211,7 +211,7 @@ class AcomodacaoRepo extends BaseRepository
                         if ($hasWhere) {
                             $and =  ' and ';
                         }
-                        $baseQuery .= $this->where(' diaria ',  ' >= ', 0, $and) . $this->where(' diaria ',  ' <= ', 50, ' and ');
+                        $baseQuery .= $this->where(' diaria ',  ' >= ', 0, $and) . $this->where(' diaria ',  ' <= ', 50, $and);
 
                         break;
 
@@ -219,7 +219,7 @@ class AcomodacaoRepo extends BaseRepository
                         if ($hasWhere) {
                             $and =  ' and ';
                         }
-                        $baseQuery .= $this->where(' diaria ',  ' >= ', 50, $and) . $this->where(' diaria ',  ' <= ', 100, ' and ');
+                        $baseQuery .= $this->where(' diaria ',  ' >= ', 50, $and) . $this->where(' diaria ',  ' <= ', 100, $and);
 
                         break;
 
@@ -227,7 +227,7 @@ class AcomodacaoRepo extends BaseRepository
                         if ($hasWhere) {
                             $and =  ' and ';
                         }
-                        $baseQuery .= $this->where(' diaria ',  ' >= ', 100, $and) . $this->where(' diaria ',  ' <= ', 300, ' and ');
+                        $baseQuery .= $this->where(' diaria ',  ' >= ', 100, $and) . $this->where(' diaria ',  ' <= ', 300, $and);
 
                         break;
 
