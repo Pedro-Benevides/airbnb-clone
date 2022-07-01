@@ -21,7 +21,7 @@ class UserController
 
     public function getForm()
     {
-        $paises = $this->paisRepo->getAll();
+        $paises = $this->paisRepo->all();
         require dirname(dirname(__FILE__)) . '\Views\pages\register.php';
     }
 

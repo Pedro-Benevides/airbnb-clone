@@ -33,10 +33,10 @@ class PaisRepo extends BaseRepository
         return $this->buildPais($result);
     }
 
-    public function getAll(): ?array
+    public function all(): ?array
     {
         $db = Connection::Connect();
-        $results = $db->query($this->search());
+        $results = $db->query($this->getAll());
 
         $paisArray = array();
         $i = 0;
