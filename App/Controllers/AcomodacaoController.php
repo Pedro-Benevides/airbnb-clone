@@ -35,7 +35,7 @@ class AcomodacaoController
 
     public function list()
     {
-        $acomodacoes = $this->acomodacaoRepo->all();
+        $acomodacoes = $this->acomodacaoRepo->all($_POST);
         $cidades = $this->cidadeRepo->all();
         $tipos = $this->tipoAcomodacaoRepo->all();
         $confortos = $this->confortoRepo->all();

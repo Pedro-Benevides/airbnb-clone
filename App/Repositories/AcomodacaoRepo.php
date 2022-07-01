@@ -8,6 +8,7 @@ require_once 'BaseRepository.php';
 require_once 'UsuarioRepo.php';
 require_once 'CidadeRepo.php';
 require_once 'TipoAcomodacaoRepo.php';
+require_once 'ConfortoRepo.php';
 
 use App\Models\Acomodacao;
 use App\Repositories\BaseRepository;
@@ -19,18 +20,21 @@ class AcomodacaoRepo extends BaseRepository
     private $usuarioRepo;
     private $cidadeRepo;
     private $tipoAcomodacaoRepo;
+    private $confortoRepo;
 
     public function __construct()
     {
         $this->cidadeRepo = new CidadeRepo();
         $this->usuarioRepo = new UsuarioRepo();
         $this->tipoAcomodacaoRepo = new TipoAcomodacaoRepo();
+        $this->confortoRepo = new ConfortoRepo();
         parent::__construct('acomodacao');
     }
 
     public function create(array $acomodacaoForm)
     {
         $acomodacaoForm['usuario_id'] = $_SESSION['AUTH'];
+        $acomodacaoForm['diaria'] = number_format($acomodacaoForm['diaria'], 2, '.', '');
 
         $db = Connection::Connect();
         $columns = array_keys($acomodacaoForm);
@@ -47,10 +51,10 @@ class AcomodacaoRepo extends BaseRepository
         return $lastId;
     }
 
-    public function all()
+    public function all(array $filters = null)
     {
         $db = Connection::Connect();
-        $results = $db->query($this->getAll());
+        $results = $db->query($this->filterList($filters));
 
         $acomodacaoArray = array();
         $i = 0;
@@ -59,6 +63,10 @@ class AcomodacaoRepo extends BaseRepository
             $acomodacaoArray[$i] = $this->buildAcomodacao($linha);
             $i++;
         }
+
+        array_map(function (Acomodacao $acomodacao) {
+            $acomodacao->setConfortos($this->confortoRepo->filterByAcomodacao($acomodacao->getId()));
+        }, $acomodacaoArray);
 
         return $acomodacaoArray;
     }
@@ -154,5 +162,81 @@ class AcomodacaoRepo extends BaseRepository
                 );
             }
         }
+    }
+
+    public function filterList(array $filters = null)
+    {
+        $baseQuery = $this->getAll();
+        if (!empty($filters)) {
+
+            $hasWhere = false;
+            $and = null;
+
+            $confortosIds = [];
+            if ($filters['conforto1'] !== '0') {
+                array_push($confortosIds, $filters['conforto1']);
+            }
+            if ($filters['conforto2'] !== '0') {
+                array_push($confortosIds, $filters['conforto2']);
+            }
+            if ($filters['conforto3'] !== '0') {
+                array_push($confortosIds, $filters['conforto3']);
+            }
+
+            if (!empty($confortosIds)) {
+                $baseQuery .= $this->join(' conforto_has_acomodacao ',  ' conforto_has_acomodacao.acomodacao_id ',  ' acomodacao.id ')
+                    . $this->whereIn(' conforto_id ', $confortosIds);
+                $hasWhere = true;
+            }
+
+            if ($filters['cidade_id'] != '0') {
+                if ($hasWhere) {
+                    $and =  ' and ';
+                }
+                $baseQuery .= $this->where(' cidade_id ',  ' = ', $filters['cidade_id']);
+                $hasWhere = true;
+            }
+
+            if ($filters['tipo_acomodacao_id'] != '0') {
+                if ($hasWhere) {
+                    $and =  ' and ';
+                }
+                $baseQuery .= $this->where(' tipo_acomodacao_id ',  ' = ', $filters['tipo_acomodacao_id'], $and);
+                $hasWhere = true;
+            }
+
+            if ($filters['diaria'] != '0') {
+                switch ($filters['diaria']) {
+                    case 1:
+                        if ($hasWhere) {
+                            $and =  ' and ';
+                        }
+                        $baseQuery .= $this->where(' diaria ',  ' >= ', 0, $and) . $this->where(' diaria ',  ' <= ', 50, ' and ');
+
+                        break;
+
+                    case 2:
+                        if ($hasWhere) {
+                            $and =  ' and ';
+                        }
+                        $baseQuery .= $this->where(' diaria ',  ' >= ', 50, $and) . $this->where(' diaria ',  ' <= ', 100, ' and ');
+
+                        break;
+
+                    case 3:
+                        if ($hasWhere) {
+                            $and =  ' and ';
+                        }
+                        $baseQuery .= $this->where(' diaria ',  ' >= ', 100, $and) . $this->where(' diaria ',  ' <= ', 300, ' and ');
+
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+
+        return $baseQuery . $this->groupBy('id', true);
     }
 }
