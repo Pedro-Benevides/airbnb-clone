@@ -59,4 +59,25 @@ class ConfortoRepo extends BaseRepository
 
         return $conforto;
     }
+
+    public function filterByAcomodacao(int $acomodacaoId)
+    {
+        $db = Connection::Connect();
+
+        $results = $db->query(
+            $this->getAll()
+                . $this->join('conforto_has_acomodacao', 'conforto_has_acomodacao.conforto_id', 'conforto.id')
+                . $this->where('acomodacao_id', "=", $acomodacaoId)
+        );
+
+        $confortoArray = array();
+        $i = 0;
+
+        while ($linha = $results->fetch(PDO::FETCH_ASSOC)) {
+            $confortoArray[$i] = $this->buildConforto($linha);
+            $i++;
+        }
+
+        return $confortoArray;
+    }
 }
