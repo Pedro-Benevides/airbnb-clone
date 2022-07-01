@@ -38,6 +38,7 @@ class Acomodacao
     private $imagemInterior;
     private $imagemFrontal;
     private $imagemAdicional;
+    private $confortos;
 
     function __construct(
         Usuario $proprietario,
@@ -328,6 +329,26 @@ class Acomodacao
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of confortos
+     */ 
+    public function getConfortos()
+    {
+        return $this->confortos;
+    }
+
+    /**
+     * Set the value of confortos
+     *
+     * @return  self
+     */ 
+    public function setConfortos($confortos)
+    {
+        $this->confortos = $confortos;
 
         return $this;
     }

@@ -23,6 +23,22 @@ class CidadeRepo extends BaseRepository
         parent::__construct('cidade');
     }
 
+    public function all()
+    {
+        $db = Connection::Connect();
+        $results = $db->query($this->getAll());
+
+        $cidadeArray = array();
+        $i = 0;
+
+        while ($linha = $results->fetch(PDO::FETCH_ASSOC)) {
+            $cidadeArray[$i] = $this->buildCidade($linha);
+            $i++;
+        }
+
+        return $cidadeArray;
+    }
+
     public function whereId(int $id): ?Cidade
     {
         $db = Connection::Connect();
@@ -42,9 +58,13 @@ class CidadeRepo extends BaseRepository
         $estado = $this->estadoRepo->whereId($queryResult['estado_id']);
         $queryResult['estado'] = $estado;
 
-        return new Cidade(
+        $cidade = new Cidade(
             $queryResult['nome'],
             $queryResult['estado'],
         );
+
+        $cidade->setId($queryResult['id']);
+
+        return $cidade;
     }
 }

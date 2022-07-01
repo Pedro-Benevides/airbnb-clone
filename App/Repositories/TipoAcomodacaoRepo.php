@@ -16,7 +16,23 @@ class TipoAcomodacaoRepo extends BaseRepository
 
     public function __construct()
     {
-        parent::__construct('pais');
+        parent::__construct('tipo_acomodacao');
+    }
+
+    public function all()
+    {
+        $db = Connection::Connect();
+        $results = $db->query($this->getAll());
+
+        $tipoAcomodacaoArray = array();
+        $i = 0;
+
+        while ($linha = $results->fetch(PDO::FETCH_ASSOC)) {
+            $tipoAcomodacaoArray[$i] = $this->buildTipoAcomodacao($linha);
+            $i++;
+        }
+
+        return $tipoAcomodacaoArray;
     }
 
     public function whereId(int $id): ?TipoAcomodacao
@@ -35,8 +51,12 @@ class TipoAcomodacaoRepo extends BaseRepository
 
     private function buildTipoAcomodacao($queryResult)
     {
-        return new TipoAcomodacao(
-            $queryResult['nome']
+        $tipo = new TipoAcomodacao(
+            $queryResult['descricao']
         );
+
+        $tipo->setId($queryResult['id']);
+
+        return $tipo;
     }
 }
