@@ -20,7 +20,7 @@ class BaseRepository
         $this->schema = $schema;
     }
 
-    private function formatArrayValues(array $values = null)
+    private function formatArrayValues($values = null)
     {
         if (is_array($values)) {
             return implode(', ', array_map(function ($value) {
