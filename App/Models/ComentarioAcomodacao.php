@@ -20,11 +20,9 @@ class ComentarioAcomodacao
     private $acomodacao;
     private $autor;
 
-    public function __construct(string $comentario, Acomodacao $acomodacao, Locatario $autor)
+    public function __construct(string $comentario)
     {
         $this->comentario = $comentario;
-        $this->acomodacao = $acomodacao;
-        $this->autor = $autor;
     }
 
     /**
