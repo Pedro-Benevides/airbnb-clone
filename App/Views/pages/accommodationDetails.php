@@ -35,10 +35,19 @@
           </div>
           <div class="column-xs-4 column-md-6">
             <ul>
-              <li class="nav-item"><a href="login">Login</a></li>
-              <li class="nav-item"><a href="register">Cadastro</a></li>
-              <li class="nav-item"><a href="accommodationList">Buscar acomodações</a></li>
-              <li class="nav-item"><a href="accommodationRegister">Cadastro de acomodações</a></li>
+              <?php
+              if ($loggedUser) {
+              ?>
+                <li class="nav-item"><a href="accommodationList">Buscar acomodações</a></li>
+                <li class="nav-item"><a href="accommodationRegister">Cadastro de acomodações</a></li>
+              <?php
+              } else {
+              ?>
+                <li class="nav-item"><a href="login">Login</a></li>
+                <li class="nav-item"><a href="register">Cadastro</a></li>
+              <?php
+              }
+              ?>
             </ul>
           </div>
         </div>
@@ -48,61 +57,52 @@
 
   <main class="ss">
     <div class="container">
-      <div class="grid second-nav">
-        <div class="column-xs-12">
-          <nav>
-            <ol class="breadcrumb-list">
-              <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
-              <li class="breadcrumb-item"><a href="accommodationList.html">Tower</a></li>
-              <li class="breadcrumb-item active">Tower City</li>
-            </ol>
-          </nav>
-        </div>
-      </div>
       <div class="grid product">
         <div class="column-xs-12 column-md-7">
           <div class="product-gallery">
             <div class="product-image">
-              <img class="active" src="../img/tower city.jpg">
+              <img class="active" src="<?php echo $acomodacao->getImagemFrontal(); ?>">
             </div>
             <ul class="image-list">
-              <li class="image-item"><img src="../img/tower city.jpg"></li>
-              <li class="image-item"><img src="../img/tower city.jpg"></li>
-              <li class="image-item"><img src="../img/tower city.jpg"></li>
+              <img src="" alt="description image">
+              <li class="image-item"><img src="<?php echo $acomodacao->getImagemInterior(); ?>"></li>
+              <li class="image-item"><img src="<?php echo $acomodacao->getImagemAdicional(); ?>"></li>
             </ul>
           </div>
         </div>
         <div class="column-xs-12 column-md-5">
-          <h1>Tower City</h1>
-          <h2>$210.00</h2>
+          <h1><?php echo $acomodacao->getTipoAcomodacao()->getDescricao(); ?></h1>
+          <h2><?php echo "R$" . number_format($acomodacao->getDiaria(), 2, ',', ' ');  ?></h2>
           <div class="description">
-            <p>aconchegante com uma grande variedade de plantas, espaço ventilado, e com 2 andares sendo os quartos na parte de baixo e na parte de cima, sala de estar. cozinha, lavanderia, varanda, e coworking.</p>
+            <p><?php echo $acomodacao->getDescricao(); ?></p>
             <ul>
               <li>
-                <p>2 Hóspedes</p>
+                <p><?php echo "Ideal para " . $acomodacao->getCapacidade() . " Hóspedes"; ?></p>
               </li>
-              <li>
-                <p>1 Quarto</p>
-              </li>
-              <li>
-                <p>1 Cama</p>
-              </li>
-              <li>
-                <p>1 Banheiro Compartilhado</p>
-              </li>
-              <li>
-                <p>WI-FI</p>
-              </li>
-
+              <?php foreach ($acomodacao->getConfortos() as $conforto) { ?>
+                <li>
+                  <p><?php echo $conforto->getDescricao(); ?></p>
+                </li>
+              <?php }; ?>
             </ul>
 
-            <form action="cardRegister.html">
-              <p>Check In: <input class="add-to-date" type="date" placeholder="Check IN" id="check in"></p>
+            <?php
+            if ($loggedUser->getCartao()) {
+            ?>
+              <form action="confirm" method="post">
+              <?php
+            } else {
+              ?>
+                <form action="cardRegister" method="post">
+                <?php
+              }
+                ?>
+                <p>Check In: <input class="add-to-date" type="date" placeholder="Check IN" name="dataInicio"></p>
 
-              <p>Check Out: <input class="add-to-date" type="date" placeholder="Check OUT" id="check out"></p>
+                <p>Check Out: <input class="add-to-date" type="date" placeholder="Check OUT" name="dataFim"></p>
 
-              <button class="add-to-cart">Fazer Reserva</button>
-            </form>
+                <button class="add-to-cart">Fazer Reserva</button>
+                </form>
           </div>
         </div>
       </div>
@@ -110,54 +110,12 @@
 
 
       <!-- Comentarios -->
-
-      <!-- comentario-->
-      <div class="container-comment">
-        <h1>Pedro Victor</h1>
-        <h2>20 Minutos Atrás</h2>
-        <p>Casa E quando todos nos acolhem e não dão as boas-vindas a nenhum dos nossos negócios, nenhuma dessas
-          dores está relacionada à forma como esses sintomas ocorrem. Eles estão se afastando dos prazeres,
-          mas da efeminação!</p>
-      </div>
-
-      <div class="container-comment">
-        <h1>Rafael Cruz</h1>
-        <h2>5 Minutos Atrás</h2>
-        <p>Casa E quando todos nos acolhem e não dão as boas-vindas a nenhum dos nossos negócios, nenhuma dessas
-          dores está relacionada à forma como esses sintomas ocorrem. Eles estão se afastando dos prazeres,
-          mas da efeminação!</p>
-      </div>
-
-
-
-
-
-      <div class="grid related-products">
-        <div class="column-xs-12">
-          <h3>Você pode gostar</h3>
+      <?php foreach ($acomodacao->getComentarios() as $comentario) { ?>
+        <div class="container-comment">
+          <h1><?php echo $comentario->getAutor()->getNome(); ?></h1>
+          <p><?php echo $comentario->getComentario(); ?></p>
         </div>
-        <div class="column-xs-12 column-md-4">
-          <img src="../img/tower city.jpg">
-          <a href="">
-            <h4>Tower City</h4>
-          </a>
-          <p class="price">$120.00</p>
-        </div>
-        <div class="column-xs-12 column-md-4">
-          <img src="../img/tower city.jpg">
-          <a href="">
-            <h4>Tower City</h4>
-          </a>
-          <p class="price">$299.99</p>
-        </div>
-        <div class="column-xs-12 column-md-4">
-          <img src="../img/tower city.jpg">
-          <a href="">
-            <h4>Tower City</h4>
-          </a>
-          <p class="price">$99.99</p>
-        </div>
-      </div>
+      <?php }; ?>
     </div>
   </main>
 
@@ -167,7 +125,7 @@
     <section id="section-footer">
       <div class="container-footer">
         <h4>ABOUT</h4>
-        <p>Vamos desenvolver um sistema para aluguel de imóveis por temporada, similar ao Airbnb.De uma maneira geral, o sistema possibilita que pessoas se cadastrem e disponibilizem acomodações (casas, apartamentos, quartos, etc.) para locação. Da mesma forma outras pessoas podem acessar o sistema para buscar acomodações para locar.</p>
+        <p>Vamos desenvolver um sistema para aluguel de imóveis por temporada, similar ao Airbnb. De uma maneira geral, o sistema possibilita que pessoas se cadastrem e disponibilizem acomodações (casas, apartamentos, quartos, etc.) para locação. Da mesma forma outras pessoas podem acessar o sistema para buscar acomodações para locar.</p>
       </div>
       <div class="container-footer">
         <h4>Quick Links</h4>
