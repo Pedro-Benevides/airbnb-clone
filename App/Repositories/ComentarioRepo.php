@@ -5,9 +5,11 @@ namespace App\Repositories;
 require_once dirname(dirname(dirname(__FILE__))) . '\database\config\connection.php';
 require_once dirname(dirname(__FILE__)) . '\Models\ComentarioAcomodacao.php';
 require_once 'BaseRepository.php';
+require_once 'UsuarioRepo.php';
 
 use App\Models\ComentarioAcomodacao;
 use App\Repositories\BaseRepository;
+use App\Repositories\UsuarioRepo;
 use Connection;
 use PDO;
 
@@ -80,8 +82,12 @@ class ComentarioRepo extends BaseRepository
 
     private function buildComentario($queryResult)
     {
+        $usuarioRepo = new UsuarioRepo();
+        $usuario = $usuarioRepo->whereId($queryResult['usuario_id']);
+
         $conforto = new ComentarioAcomodacao(
-            $queryResult['comentario']
+            $queryResult['comentario'],
+            $usuario
         );
 
         return $conforto;
