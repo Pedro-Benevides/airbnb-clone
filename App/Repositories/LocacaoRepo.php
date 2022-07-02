@@ -4,10 +4,14 @@ namespace App\Repositories;
 
 require_once dirname(dirname(dirname(__FILE__))) . '\database\config\connection.php';
 require_once dirname(dirname(__FILE__)) . '\Models\Locacao.php';
+require_once dirname(dirname(__FILE__)) . '\Entities\Locatario.php';
+
 require_once 'BaseRepository.php';
 require_once 'UsuarioRepo.php';
 require_once 'AcomodacaoRepo.php';
+require_once 'CartaoRepo.php';
 
+use App\Entities\Locatario;
 use App\Models\Locacao;
 use App\Repositories\BaseRepository;
 use Connection;
@@ -15,14 +19,8 @@ use PDO;
 
 class LocacaoRepo extends BaseRepository
 {
-    private $usuarioRepo;
-    private $acomodacaoRepo;
-
     public function __construct()
     {
-        $this->usuarioRepo = new UsuarioRepo();
-        $this->acomodacaoRepo = new AcomodacaoRepo();
-
         parent::__construct('locacao');
     }
 
@@ -84,15 +82,16 @@ class LocacaoRepo extends BaseRepository
 
     private function buildLocacao($queryResult)
     {
-        $locatario = $this->usuarioRepo->whereId($queryResult['usuario_locatario_id']);
-
+        $usuarioRepo = new UsuarioRepo();
+        $locatario = $usuarioRepo->whereId($queryResult['usuario_locatario_id'], 1);
+        
         $locacao =  new Locacao(
             $locatario,
             null,
-            $queryResult['diaria'],
+            $queryResult['valor'],
             $queryResult['data_inicio'],
             $queryResult['data_fim'],
-            $queryResult['multa'],
+            $queryResult['valor_multa'],
             $queryResult['checkin'],
             $queryResult['cancelamento']
         );
