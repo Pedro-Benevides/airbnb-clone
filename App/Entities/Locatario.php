@@ -25,21 +25,17 @@ class Locatario extends Usuario
 
     public function __construct(
         Usuario $usuario,
-        Cartao $cartao,
-        array $locacoes = array(),
-        array $comentarios = array()
+        Cartao $cartao = null,
     ) {
         $this->cartao = $cartao;
-        $this->locacoes = $locacoes;
-        $this->comentarios = $comentarios;
 
         parent::__construct(
-            $usuario->nome,
-            $usuario->cpf,
-            $usuario->email,
-            $usuario->senha,
-            $usuario->pais,
-            $usuario->telefone,
+            $usuario->getNome(),
+            $usuario->getCpf(),
+            $usuario->getEmail(),
+            $usuario->getSenha(),
+            $usuario->getPais(),
+            $usuario->getTelefone(),
         );
     }
 
