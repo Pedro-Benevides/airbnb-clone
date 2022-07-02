@@ -17,8 +17,7 @@ Desenvolvido em php 8.1 mais banco de dados MySQL, utilizando o MySQL Workbench 
 |Variável|Descrição|Valor Padrão|
 |--------|---------|------------|
 |DB_DATABASE|Nome da conexão no banco de dados|airbnb-clone|
-|DB_HOSTNAME|Endereço do servidor do banco||
-|DB_PORT|Porta de acesso ao servidor||
+|DB_HOSTNAME|Endereço do servidor do banco:Porta de acesso||
 |DB_USER|Usuário de acesso||
 |DB_PASSWORD|Senha de acesso||
 
