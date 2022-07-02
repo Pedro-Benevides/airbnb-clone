@@ -9,6 +9,8 @@ require_once 'UsuarioRepo.php';
 require_once 'CidadeRepo.php';
 require_once 'TipoAcomodacaoRepo.php';
 require_once 'ConfortoRepo.php';
+require_once 'ComentarioRepo.php';
+require_once 'LocacaoRepo.php';
 
 use App\Models\Acomodacao;
 use App\Repositories\BaseRepository;
@@ -21,6 +23,8 @@ class AcomodacaoRepo extends BaseRepository
     private $cidadeRepo;
     private $tipoAcomodacaoRepo;
     private $confortoRepo;
+    private $comentarioRepo;
+    private $locacaoRepo;
 
     public function __construct()
     {
@@ -28,7 +32,8 @@ class AcomodacaoRepo extends BaseRepository
         $this->usuarioRepo = new UsuarioRepo();
         $this->tipoAcomodacaoRepo = new TipoAcomodacaoRepo();
         $this->confortoRepo = new ConfortoRepo();
-        parent::__construct('acomodacao');
+        $this->comentarioRepo = new ComentarioRepo();
+        $this->locacaoRepo = new LocacaoRepo();
     }
 
     public function create(array $acomodacaoForm)
@@ -71,7 +76,7 @@ class AcomodacaoRepo extends BaseRepository
         return $acomodacaoArray;
     }
 
-    public function whereId(int $id): ?Acomodacao
+    public function whereId(int $id, $includeDetails = false): ?Acomodacao
     {
         $db = Connection::Connect();
         $result = $db->query(
@@ -82,9 +87,15 @@ class AcomodacaoRepo extends BaseRepository
             )
         )->fetch(PDO::FETCH_ASSOC);
 
-        $acomodacaoArray = $this->buildAcomodacao($result);
+        $acomodacao = $this->buildAcomodacao($result);
 
-        return $acomodacaoArray;
+        if ($includeDetails) {
+            $acomodacao->setConfortos($this->confortoRepo->filterByAcomodacao($acomodacao->getId()));
+            $acomodacao->setComentarios($this->comentarioRepo->whereAcomodacaoId($acomodacao->getId()));
+            $acomodacao->setLocacoes($this->locacaoRepo->whereAcomodacaoId($acomodacao->getId()));
+        }
+
+        return $acomodacao;
     }
 
     private function buildAcomodacao($queryResult)
