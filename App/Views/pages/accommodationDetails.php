@@ -107,7 +107,7 @@
             <?php
             if ($loggedUser->getCartao()) {
             ?>
-              <form action="confirm" method="post">
+              <form action="purchaseDetails" method="post">
               <?php
             } else {
               ?>
@@ -119,7 +119,7 @@
 
                 <p>Check Out: <input class="add-to-date" type="date" placeholder="Check OUT" name="dataFim"></p>
 
-                <button class="add-to-cart">Fazer Reserva</button>
+                <button class="add-to-cart" type="submit">Fazer Reserva</button>
                 </form>
           </div>
         </div>
@@ -161,7 +161,22 @@
 
   <!-- js -->
 
-  <script src="../js/details.js"></script>
+  <script>
+    const activeImage = document.querySelector(".product-image .active");
+    const productImages = document.querySelectorAll(".image-list img");
+    const navItem = document.querySelector('a.toggle-nav');
+
+    function changeImage(e) {
+      activeImage.src = e.target.src;
+    }
+
+    function toggleNavigation() {
+      this.nextElementSibling.classList.toggle('active');
+    }
+
+    productImages.forEach(image => image.addEventListener("click", changeImage));
+    navItem.addEventListener('click', toggleNavigation);
+  </script>
 
 </body>
 
