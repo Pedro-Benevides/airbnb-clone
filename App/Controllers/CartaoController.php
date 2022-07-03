@@ -24,10 +24,10 @@ class CartaoController
         $result = $cartaoRepo->create($_POST);
 
         if (is_array($result)) {
-            list($dataInicio, $dataFim) = $result;
+            list($dataInicio, $dataFim, $accommodation) = $result;
 
             if ($dataInicio && $dataFim) {
-                header('Location:purchaseDetails?dataInicio=' . $dataInicio . '?dataFim=' . $dataFim, true, 302);
+                header('Location:purchaseDetails?dataInicio=' . $dataInicio . '&dataFim=' . $dataFim, '&accommodation=' . $accommodation, true, 302);
             } else {
                 header('Location:accommodationList', true, 302);
             }
