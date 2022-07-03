@@ -42,7 +42,7 @@ class Locatario extends Usuario
     /**
      * Get the value of cartao
      */
-    public function getCartao(): Cartao
+    public function getCartao(): ?Cartao
     {
         return $this->cartao;
     }
@@ -52,7 +52,7 @@ class Locatario extends Usuario
      *
      * @return  self
      */
-    public function setCartao(Cartao $cartao)
+    public function setCartao(Cartao $cartao = null)
     {
         $this->cartao = $cartao;
 
