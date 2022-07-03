@@ -46,6 +46,7 @@ var_dump($_POST);
   <form class="form" autocomplete="off" novalidate action="cardRegister" method="post">
     <input type="hidden" name="dataInicio" value="<?php echo $_POST['dataInicio']; ?>">
     <input type="hidden" name="dataFim" value="<?php echo $_POST['dataFim']; ?>">
+    <input type="hidden" name="accommodation" value="<?php echo $_POST['accommodation']; ?>">
     <fieldset>
       <label for="card-number1">Numero</label>
       <input required type="num" name="cardNumber1" class="input-cart-number" maxlength="4" />

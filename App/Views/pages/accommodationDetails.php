@@ -119,6 +119,8 @@
 
                 <p>Check Out: <input class="add-to-date" type="date" placeholder="Check OUT" name="dataFim"></p>
 
+                <input type="hidden" name="accommodation" value="<?php echo $acomodacao->getId(); ?>" />
+
                 <button class="add-to-cart" type="submit">Fazer Reserva</button>
                 </form>
           </div>
