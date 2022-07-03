@@ -41,7 +41,7 @@ class CartaoRepo extends BaseRepository
         );
 
         if ($db->lastInsertId()) {
-            return [$cartaoForm['dataInicio'], $cartaoForm['dataFim']];
+            return [$cartaoForm['dataInicio'], $cartaoForm['dataFim'], $cartaoForm['accommodation']];
         } else {
             return 'error';
         }
