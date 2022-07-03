@@ -617,7 +617,10 @@ padding: 10px;
 max-width: 100%;
 }
 
+.confirmd {
+background-color: #080710;
 
+}
 
 .confirmd form{
 width: 500px;
@@ -644,12 +647,13 @@ font-size: 32px;
 font-weight: 500;
 line-height: 42px;
 text-align: center;
-color: black;
+color: #ffffff;
 }
+
 
 .confirmd h1 {
 text-align: center;
-color: black;
+color: #ffffff;
 font-weight: 20;
 margin: 0 0 40px;
 font-size: 25px;
@@ -669,4 +673,45 @@ text-transform: uppercase;
 letter-spacing: .1em;
 transition: all 0.5s ease;
 -webkit-appearance: none;
+}
+
+.buttonC {
+margin-top: 30px;
+width: 100%;
+background-color: red;
+color: white;
+padding: 15px 0;
+font-size: 18px;
+font-weight: 600;
+border-radius: 5px;
+cursor: pointer;
+text-transform: uppercase;
+letter-spacing: .1em;
+transition: all 0.5s ease;
+-webkit-appearance: none;
+}
+
+
+.confirmd label{
+display: block;
+margin-top: 30px;
+font-size: 16px;
+font-weight: 500;
+color: white;
+}
+
+.confirmd input{
+display: block;
+height: 50px;
+width: 100%;
+background-color: rgba(255,255,255,0.07);
+border-radius: 3px;
+padding: 0 10px;
+margin-top: 8px;
+font-size: 14px;
+font-weight: 300;
+}
+
+.confirmd ::placeholder{
+color: white;
 }

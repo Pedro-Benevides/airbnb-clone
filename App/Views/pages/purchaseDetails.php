@@ -20,26 +20,29 @@
 
 </head>
 
-<body>
+<body class="confirmd">
 
     <div class="confirmd">
 
-        <form action="locate" method="POST">
+        <form action="rentRegister" method="POST">
 
-            <h3 style="color: black;">Confirmação da compra</h3>
+            <h3>Confirmação da compra</h3>
 
+            <label for="period">Período</label>
+            <input type="text" id='period' placeholder="<?php echo "De " . date("d/m/y", strtotime($dataInicio)) . " até " . date("d/m/y", strtotime($dataFim))  ?>" readonly>
 
-            <h3 style="color: black;">Periodo</h3>
-            <h1><?php echo "De " . $dataInicio . " até " . $dataFim  ?></h1>
-
-
-
-            <h3 style="color: black;">Valor da Diaria</h3>
-            <h1><?php echo "R$" . number_format($acomodacao->getDiaria(), 2, ',', ' ');  ?></h1>
-
+            <label for="cost">Valor da Diaria</label>
+            <input type="text" id="cost" placeholder="<?php echo "R$" . number_format($acomodacao->getDiaria(), 2, ',', ' ');  ?>" readonly>
 
             <button type="submit" class="buttonD">Confirmar</button>
 
+            <a href="accommodationList">
+                <button type="button" class="buttonC">Cancelar</button>
+            </a>
+            <input type="hidden" name="valor" value="<?php echo $acomodacao->getDiaria(); ?>">
+            <input type="hidden" name="data_inicio" value="<?php echo $dataInicio; ?>">
+            <input type="hidden" name="data_fim" value="<?php echo $dataFim; ?>">
+            <input type="hidden" name="acomodacao_id" value="<?php echo $acomodacao->getId(); ?>">
         </form>
 
 
