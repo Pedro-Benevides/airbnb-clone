@@ -30,7 +30,7 @@ class UserController
         if ($user) {
             require dirname(dirname(__FILE__)) . '\Views\pages\login.php';
         } else {
-            return dirname(dirname(__FILE__)) . '\Views\pages\error500.php';;
+            return dirname(dirname(__FILE__)) . '\Views\pages\error500.php';
         }
     }
 
