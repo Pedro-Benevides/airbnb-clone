@@ -27,14 +27,19 @@ class LocacaoRepo extends BaseRepository
 
     public function create(array $locacaoData)
     {
+        $locacaoData['usuario_locatario_id'] = $_SESSION['AUTH'];
+
         $db = Connection::Connect();
         $columns = array_keys($locacaoData);
         $values = array_values($locacaoData);
 
-        return
-            $db->query(
-                $this->insert($columns, $values)
-            );
+        var_dump($values);
+
+        $db->query(
+            $this->insert($columns, $values)
+        );
+
+        return $db->lastInsertId();
     }
 
     public function whereAcomodacaoId(int $id): ?array
