@@ -20,6 +20,33 @@ class CartaoRepo extends BaseRepository
         parent::__construct('cartao');
     }
 
+    public function create(array $cartaoForm)
+    {
+        $cartaoForm['cvv'] = $this->encrypt($cartaoForm['cvv']);
+
+        $cartaoFormFomated = [
+            'cvv' => $cartaoForm['cvv'],
+            'titular' => strtoupper($cartaoForm['titular']),
+            'numero' => implode(' ', [$cartaoForm['cardNumber1'], $cartaoForm['cardNumber2'], $cartaoForm['cardNumber3'], $cartaoForm['cardNumber4']]),
+            'vencimento' => "{$cartaoForm['expirationYear']}-{$cartaoForm['expirationMonth']}-01",
+            'usuario_id' => $_SESSION['AUTH']
+        ];
+
+        $db = Connection::Connect();
+        $columns = array_keys($cartaoFormFomated);
+        $values = array_values($cartaoFormFomated);
+
+        $db->query(
+            $this->insert($columns, $values)
+        );
+
+        if ($db->lastInsertId()) {
+            return [$cartaoForm['dataInicio'], $cartaoForm['dataFim']];
+        } else {
+            return 'error';
+        }
+    }
+
     public function whereUsuarioId(int $id): ?Cartao
     {
         $db = Connection::Connect();
@@ -54,5 +81,18 @@ class CartaoRepo extends BaseRepository
         }
 
         return $cartao;
+    }
+
+    private function encrypt($cvv)
+    {
+        return md5(
+            htmlspecialchars(
+                stripslashes(
+                    trim(
+                        $cvv
+                    )
+                )
+            )
+        );
     }
 }
