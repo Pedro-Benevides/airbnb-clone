@@ -23,7 +23,7 @@ class UsuarioRepo extends BaseRepository
 
     public function create(array $userForm)
     {
-        $userForm['senha'] = $this->formatPassword($userForm['senha']);
+        $userForm['senha'] = $this->encrypt($userForm['senha']);
 
         $db = Connection::Connect();
         $columns = array_keys($userForm);
@@ -156,7 +156,7 @@ class UsuarioRepo extends BaseRepository
         return $locatario;
     }
 
-    private function formatPassword($password)
+    private function encrypt($password)
     {
         return md5(
             htmlspecialchars(
