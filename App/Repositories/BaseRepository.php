@@ -69,13 +69,9 @@ class BaseRepository
         }
     }
 
-    protected function search(string $column = null, string $operator = null, string $value = null, $selectColumns = null, $addwhere = false)
+    protected function search(string $column = null, string $operator = null, string $value = null, $selectColumns = null)
     {
-        if ($addwhere) {
-            return $this->select($selectColumns) . $this->from . $this->where($column, $operator, $value);
-        } else {
-            return $this->select($selectColumns) . $this->from;
-        }
+        return $this->select($selectColumns) . $this->from . $this->where($column, $operator, $value);
     }
 
     protected function getAll($columns = null)
