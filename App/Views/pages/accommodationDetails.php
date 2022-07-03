@@ -84,6 +84,24 @@
                   <p><?php echo $conforto->getDescricao(); ?></p>
                 </li>
               <?php }; ?>
+              <?php
+              if ($acomodacao->getLocacoes()) {
+              ?>
+                <li>
+                  <p style="color: red" ;>Períodos indisponiveis:</p>
+                </li>
+                <?php
+                foreach ($acomodacao->getLocacoes() as $locacao) { ?>
+                  <li>
+                    <p style="color: red" ;><?php echo date("d/m/y", strtotime($locacao->getDataInicio())) . " - " . date("d/m/y", strtotime($locacao->getDataFim())); ?></p>
+                  </li>
+                <?php };
+              } else { ?>
+                <li>
+                  <p style="color: green" ;>Disponível</p>
+                </li>
+              <?php
+              } ?>
             </ul>
 
             <?php
@@ -93,7 +111,7 @@
               <?php
             } else {
               ?>
-                <form action="cardRegister" method="post">
+                <form action="cardForm" method="post">
                 <?php
               }
                 ?>
