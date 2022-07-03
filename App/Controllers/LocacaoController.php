@@ -16,8 +16,8 @@ class LocacaoController
         $acomodacaoRepo = new AcomodacaoRepo();
 
         $acomodacao = $acomodacaoRepo->whereId($_GET['accommodation'], true);
-        $dataInicio = date("d/m/y", strtotime($_GET['dataInicio']));
-        $dataFim = date("d/m/y", strtotime($_GET['dataFim']));
+        $dataInicio = $_GET['dataInicio'];
+        $dataFim = $_GET['dataFim'];
 
         require dirname(dirname(__FILE__)) . '\Views\pages\purchaseDetails.php';
     }
@@ -27,5 +27,11 @@ class LocacaoController
         $locacaoRepo = new LocacaoRepo();
 
         $result = $locacaoRepo->create($_POST);
+
+        if ($result) {
+            header('Location:userPage', true, 302);
+        } else {
+            return dirname(dirname(__FILE__)) . '\Views\pages\error500.php';
+        }
     }
 }
