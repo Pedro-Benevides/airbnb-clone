@@ -7,6 +7,7 @@ require_once dirname(dirname(__FILE__)) . '\Models\Usuario.php';
 require_once dirname(dirname(__FILE__)) . '\Repositories\PaisRepo.php';
 require_once 'BaseRepository.php';
 
+use App\Entities\Locatario;
 use App\Models\Usuario;
 use App\Repositories\BaseRepository;
 use App\Repositories\PaisRepo;
@@ -15,11 +16,8 @@ use PDO;
 
 class UsuarioRepo extends BaseRepository
 {
-    private $paisRepo;
-
     public function __construct()
     {
-        $this->paisRepo = new PaisRepo();
         parent::__construct('usuario');
     }
 
@@ -73,8 +71,16 @@ class UsuarioRepo extends BaseRepository
         }
     }
 
-    public function whereId(int $id): ?Usuario
+    /**
+     * Consulta um usuario no banco pelo ID
+     * 
+     * @param int id
+     * @param int option valor para configurar o retorno, default: 0 traz um usuario padrão, 1 retorna um Locatario, 2 retorna um Anfitriao
+     * 
+     */
+    public function whereId(int $id, $option = 0)
     {
+        $usuario = null;
         $db = Connection::Connect();
         $result = $db->query(
             $this->search(
@@ -84,12 +90,25 @@ class UsuarioRepo extends BaseRepository
             )
         )->fetch(PDO::FETCH_ASSOC);
 
-        return $this->buildUsuario($result);
+        switch ($option) {
+            case 1:
+                $usuario = $this->buildLocatario($result);
+                break;
+            case 2:
+                // $usuario = $this->buildAnfitriao($result);
+                break;
+            default:
+                $usuario = $this->buildUsuario($result);
+                break;
+        }
+
+        return $usuario;
     }
 
     private function buildUsuario($queryResult)
     {
-        $userPais = $this->paisRepo->whereId($queryResult['pais_id']);
+        $paisRepo = new PaisRepo();
+        $userPais = $paisRepo->whereId($queryResult['pais_id']);
 
         $queryResult['pais'] = $userPais;
 
@@ -107,6 +126,34 @@ class UsuarioRepo extends BaseRepository
         $user->setId($queryResult['id']);
 
         return $user;
+    }
+
+    private function buildLocatario($queryResult)
+    {
+        $paisRepo = new PaisRepo();
+        $userPais = $paisRepo->whereId($queryResult['pais_id']);
+
+        $queryResult['pais'] = $userPais;
+
+        $user = new Usuario(
+            $queryResult['nome'],
+            $queryResult['cpf'],
+            $queryResult['email'],
+            $queryResult['senha'],
+            $queryResult['pais'],
+            $queryResult['telefone'],
+            $queryResult['anfitriao'],
+            $queryResult['locatario'],
+        );
+
+        $user->setId($queryResult['id']);
+
+        $cartaoRepo = new CartaoRepo();
+        $cartao = $cartaoRepo->whereUsuarioId($queryResult['id']);
+
+        $locatario = new Locatario($user, $cartao);
+
+        return $locatario;
     }
 
     private function formatPassword($password)

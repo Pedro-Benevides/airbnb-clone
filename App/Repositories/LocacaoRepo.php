@@ -4,11 +4,18 @@ namespace App\Repositories;
 
 require_once dirname(dirname(dirname(__FILE__))) . '\database\config\connection.php';
 require_once dirname(dirname(__FILE__)) . '\Models\Locacao.php';
-require_once 'BaseRepository.php';
+require_once dirname(dirname(__FILE__)) . '\Entities\Locatario.php';
 
+require_once 'BaseRepository.php';
+require_once 'UsuarioRepo.php';
+require_once 'AcomodacaoRepo.php';
+require_once 'CartaoRepo.php';
+
+use App\Entities\Locatario;
 use App\Models\Locacao;
 use App\Repositories\BaseRepository;
 use Connection;
+use DateTime;
 use PDO;
 
 class LocacaoRepo extends BaseRepository
@@ -30,36 +37,69 @@ class LocacaoRepo extends BaseRepository
             );
     }
 
-    public function get(int $id): ?Locacao
+    public function whereAcomodacaoId(int $id): ?array
     {
         $db = Connection::Connect();
-        $result = $db->query(
+        $hoje = new DateTime();
+        $results = $db->query(
             $this->search(
-                ' id ',
+                ' acomodacao_id ',
+                ' = ',
+                $id
+            ) . $this->where(' data_inicio ', ' >= ', $hoje->format("Y-m-d"), ' and ')
+        );
+
+        $locacaoArray = array();
+        $i = 0;
+
+        while ($linha = $results->fetch(PDO::FETCH_ASSOC)) {
+            $locacaoArray[$i] = $this->buildLocacao($linha);
+            $i++;
+        }
+
+        return $locacaoArray;
+    }
+
+    public function whereLocatarioId(int $id): ?array
+    {
+        $db = Connection::Connect();
+        $results = $db->query(
+            $this->search(
+                ' usuario_locatario_id ',
                 ' = ',
                 $id
             )
-        )->fetch(PDO::FETCH_ASSOC);
+        );
 
-        $acomodacaoArray = $this->buildLocacao($result);
+        $locacaoArray = array();
+        $i = 0;
 
-        return array_shift($acomodacaoArray);
+        while ($linha = $results->fetch(PDO::FETCH_ASSOC)) {
+            $locacaoArray[$i] = $this->buildLocacao($linha);
+            $i++;
+        }
+
+        return $locacaoArray;
     }
 
     private function buildLocacao($queryResult)
     {
-        return array_map(function ($row) {
-            return new Locacao(
-                $row['usuarioAnfitriaoId'],
-                $row['usuarioLocatarioId'],
-                $row['acomodacaoId'],
-                $row['diaria'],
-                $row['dataInicio'],
-                $row['dataFim'],
-                $row['multa'],
-                $row['checkin'],
-                $row['cancelamento']
-            );
-        }, $queryResult);
+        $usuarioRepo = new UsuarioRepo();
+        $locatario = $usuarioRepo->whereId($queryResult['usuario_locatario_id'], 1);
+
+        $locacao =  new Locacao(
+            $locatario,
+            null,
+            $queryResult['valor'],
+            $queryResult['data_inicio'],
+            $queryResult['data_fim'],
+            $queryResult['valor_multa'],
+            $queryResult['checkin'],
+            $queryResult['cancelamento']
+        );
+
+        $locacao->setId($queryResult['id']);
+
+        return $locacao;
     }
 }

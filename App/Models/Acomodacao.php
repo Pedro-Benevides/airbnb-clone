@@ -39,6 +39,8 @@ class Acomodacao
     private $imagemFrontal;
     private $imagemAdicional;
     private $confortos;
+    private $comentarios;
+    private $locacoes;
 
     function __construct(
         Usuario $proprietario,
@@ -335,7 +337,7 @@ class Acomodacao
 
     /**
      * Get the value of confortos
-     */ 
+     */
     public function getConfortos()
     {
         return $this->confortos;
@@ -345,10 +347,50 @@ class Acomodacao
      * Set the value of confortos
      *
      * @return  self
-     */ 
+     */
     public function setConfortos($confortos)
     {
         $this->confortos = $confortos;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of comentarios
+     */
+    public function getComentarios()
+    {
+        return $this->comentarios;
+    }
+
+    /**
+     * Set the value of comentarios
+     *
+     * @return  self
+     */
+    public function setComentarios($comentarios)
+    {
+        $this->comentarios = $comentarios;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of locacoes
+     */
+    public function getLocacoes()
+    {
+        return $this->locacoes;
+    }
+
+    /**
+     * Set the value of locacoes
+     *
+     * @return  self
+     */
+    public function setLocacoes($locacoes)
+    {
+        $this->locacoes = $locacoes;
 
         return $this;
     }

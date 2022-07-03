@@ -8,7 +8,6 @@ use App\Entities\Locatario;
 /**
  * Class Locacao
  *
- * @property Anfitriao $anfitriao
  * @property Locatario $locatario
  * @property Acomodacao $acomodacao
  * @property float $diaria
@@ -31,11 +30,11 @@ class Locacao
     private $dataFim;
     private $checkin;
     private $cancelamento;
+    private $id;
 
     function __construct(
-        Anfitriao $anfitriao,
         Locatario $locatario,
-        Acomodacao $acomodacao,
+        Acomodacao $acomodacao = null,
         float $diaria,
         string $dataInicio,
         string $dataFim,
@@ -43,7 +42,6 @@ class Locacao
         bool $checkin = false,
         bool $cancelamento = false
     ) {
-        $this->anfitriao = $anfitriao;
         $this->locatario = $locatario;
         $this->acomodacao = $acomodacao;
         $this->diaria = floatval(number_format($diaria, 2, '.', ''));
@@ -204,6 +202,26 @@ class Locacao
     public function setCancelamento(bool $cancelamento)
     {
         $this->cancelamento = $cancelamento;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
 
         return $this;
     }

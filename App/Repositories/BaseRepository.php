@@ -20,7 +20,7 @@ class BaseRepository
         $this->schema = $schema;
     }
 
-    private function formatArrayValues(array $values = null)
+    private function formatArrayValues($values = null)
     {
         if (is_array($values)) {
             return implode(', ', array_map(function ($value) {
@@ -69,13 +69,9 @@ class BaseRepository
         }
     }
 
-    protected function search(string $column = null, string $operator = null, string $value = null, $selectColumns = null, $addwhere = false)
+    protected function search(string $column = null, string $operator = null, string $value = null, $selectColumns = null)
     {
-        if ($addwhere) {
-            return $this->select($selectColumns) . $this->from . $this->where($column, $operator, $value);
-        } else {
-            return $this->select($selectColumns) . $this->from;
-        }
+        return $this->select($selectColumns) . $this->from . $this->where($column, $operator, $value);
     }
 
     protected function getAll($columns = null)

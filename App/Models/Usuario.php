@@ -157,4 +157,12 @@ class Usuario
 
         return $this;
     }
+
+    /**
+     * Get the value of senha
+     */
+    public function getSenha()
+    {
+        return $this->senha;
+    }
 }

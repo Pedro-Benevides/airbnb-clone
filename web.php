@@ -7,47 +7,47 @@ if (isset($_GET['url'])) //se estiver preenchida, pega o valor
 	// echo $url;
 	switch ($url) {
 		case "USERFORM":
-			require "App/Controllers/UserController.php";
+			require_once "App/Controllers/UserController.php";
 			$userController = new UserController();
 			$userController->getForm();
 			break;
 		case "USERREGISTER":
-			require "App/Controllers/UserController.php";
+			require_once "App/Controllers/UserController.php";
 			$userController = new UserController();
 			$userController->create();
 			break;
 		case "LOGIN":
-			require "App/Controllers/AuthController.php";
+			require_once "App/Controllers/AuthController.php";
 			$auth = new AuthController();
 			$auth->login();
 			break;
 		case "AUTH":
-			require "App/Controllers/AuthController.php";
+			require_once "App/Controllers/AuthController.php";
 			$authController = new AuthController();
 			$authController->auth();
 			break;
 		case "USERPAGE":
-			require "App/Controllers/UserController.php";
+			require_once "App/Controllers/UserController.php";
 			$userController = new UserController();
 			$userController->getUser();
 			break;
 		case "ACCOMMODATIONFORM":
-			require "App/Controllers/AcomodacaoController.php";
+			require_once "App/Controllers/AcomodacaoController.php";
 			$acomodacaoController = new AcomodacaoController();
 			$acomodacaoController->form();
 			break;
 		case "ACCOMMODATIONREGISTER":
-			require "App/Controllers/AcomodacaoController.php";
+			require_once "App/Controllers/AcomodacaoController.php";
 			$acomodacaoController = new AcomodacaoController();
 			$acomodacaoController->create();
 			break;
 		case "ACCOMMODATIONPAGE":
-			require "App/Controllers/AcomodacaoController.php";
+			require_once "App/Controllers/AcomodacaoController.php";
 			$acomodacaoController = new AcomodacaoController();
 			$acomodacaoController->getAcomodacao();
 			break;
 		case "ACCOMMODATIONLIST":
-			require "App/Controllers/AcomodacaoController.php";
+			require_once "App/Controllers/AcomodacaoController.php";
 			$acomodacaoController = new AcomodacaoController();
 			$acomodacaoController->list();
 			break;
