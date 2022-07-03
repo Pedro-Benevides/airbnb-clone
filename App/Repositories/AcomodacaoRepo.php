@@ -86,6 +86,7 @@ class AcomodacaoRepo extends BaseRepository
         if ($includeDetails) {
             $acomodacao->setConfortos($confortoRepo->filterByAcomodacao($acomodacao->getId()));
             $acomodacao->setComentarios($comentarioRepo->whereAcomodacaoId($acomodacao->getId()));
+            $acomodacao->setLocacoes($locacaoRepo->whereAcomodacaoId($acomodacao->getId()));
         }
 
         return $acomodacao;
