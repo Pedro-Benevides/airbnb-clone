@@ -15,6 +15,7 @@ use App\Entities\Locatario;
 use App\Models\Locacao;
 use App\Repositories\BaseRepository;
 use Connection;
+use DateTime;
 use PDO;
 
 class LocacaoRepo extends BaseRepository
@@ -39,12 +40,13 @@ class LocacaoRepo extends BaseRepository
     public function whereAcomodacaoId(int $id): ?array
     {
         $db = Connection::Connect();
+        $hoje = new DateTime();
         $results = $db->query(
             $this->search(
                 ' acomodacao_id ',
                 ' = ',
                 $id
-            )
+            ) . $this->where(' data_inicio ', ' >= ', $hoje->format("Y-m-d"), ' and ')
         );
 
         $locacaoArray = array();
@@ -84,7 +86,7 @@ class LocacaoRepo extends BaseRepository
     {
         $usuarioRepo = new UsuarioRepo();
         $locatario = $usuarioRepo->whereId($queryResult['usuario_locatario_id'], 1);
-        
+
         $locacao =  new Locacao(
             $locatario,
             null,
