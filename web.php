@@ -9,7 +9,7 @@ if (isset($_GET['url'])) //se estiver preenchida, pega o valor
 		case "USERFORM":
 			require_once "App/Controllers/UserController.php";
 			$userController = new UserController();
-			$userController->getForm();
+			$userController->form();
 			break;
 		case "USERREGISTER":
 			require_once "App/Controllers/UserController.php";
@@ -50,6 +50,16 @@ if (isset($_GET['url'])) //se estiver preenchida, pega o valor
 			require_once "App/Controllers/AcomodacaoController.php";
 			$acomodacaoController = new AcomodacaoController();
 			$acomodacaoController->list();
+			break;
+		case "CARDFORM":
+			require_once "App/Controllers/CartaoController.php";
+			$CartaoController = new CartaoController();
+			$CartaoController->form();
+			break;
+		case "CARDREGISTER":
+			require_once "App/Controllers/CartaoController.php";
+			$CartaoController = new CartaoController();
+			$CartaoController->create();
 			break;
 		default:
 			break;
