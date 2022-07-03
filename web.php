@@ -53,13 +53,18 @@ if (isset($_GET['url'])) //se estiver preenchida, pega o valor
 			break;
 		case "CARDFORM":
 			require_once "App/Controllers/CartaoController.php";
-			$CartaoController = new CartaoController();
-			$CartaoController->form();
+			$cartaoController = new CartaoController();
+			$cartaoController->form();
 			break;
 		case "CARDREGISTER":
 			require_once "App/Controllers/CartaoController.php";
-			$CartaoController = new CartaoController();
-			$CartaoController->create();
+			$cartaoController = new CartaoController();
+			$cartaoController->create();
+			break;
+		case "PURCHASEDETAILS":
+			require_once "App/Controllers/LocacaoController.php";
+			$locacaoController = new LocacaoController();
+			$locacaoController->confirm();
 			break;
 		default:
 			break;
