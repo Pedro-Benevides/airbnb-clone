@@ -66,6 +66,11 @@ if (isset($_GET['url'])) //se estiver preenchida, pega o valor
 			$locacaoController = new LocacaoController();
 			$locacaoController->confirm();
 			break;
+		case "RENTREGISTER":
+			require_once "App/Controllers/LocacaoController.php";
+			$locacaoController = new LocacaoController();
+			$locacaoController->create();
+			break;
 		default:
 			break;
 	}
