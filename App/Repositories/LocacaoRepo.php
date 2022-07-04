@@ -99,11 +99,14 @@ class LocacaoRepo extends BaseRepository
             $queryResult['data_inicio'],
             $queryResult['data_fim'],
             $queryResult['valor_multa'],
-            $queryResult['checkin'],
-            $queryResult['cancelamento']
+            $queryResult['checkin'] ?? 0,
+            $queryResult['cancelamento'] ?? 0
         );
 
         $locacao->setId($queryResult['id']);
+
+        $acomodacaoRepo = new AcomodacaoRepo();
+        $locacao->setAcomodacao($acomodacaoRepo->whereId($queryResult['acomodacao_id']));
 
         return $locacao;
     }
