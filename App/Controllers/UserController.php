@@ -7,16 +7,19 @@ use App\Repositories\UsuarioRepo;
 
 class UserController
 {
+    private $paises;
 
     public function __construct()
     {
+        $paisRepo = new PaisRepo();
+
+        $this->paises = $paisRepo->all();
     }
 
     public function form()
     {
-        $paisRepo = new PaisRepo();
 
-        $paises = $paisRepo->all();
+        $paises = $this->paises;
 
         require dirname(dirname(__FILE__)) . '\Views\pages\userRegister.php';
     }
@@ -38,8 +41,8 @@ class UserController
     {
         $usuarioRepo = new UsuarioRepo();
 
-        $userAuth = $usuarioRepo->whereId($_SESSION['AUTH']);
+        $user = $usuarioRepo->getComplete($_SESSION['AUTH']);
 
-        require dirname(dirname(__FILE__)) . '\Views\pages\index.php';
+        require dirname(dirname(__FILE__)) . '\Views\pages\userDetails.php';
     }
 }
