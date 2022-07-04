@@ -6,12 +6,9 @@ use App\Repositories\UsuarioRepo;
 
 class AuthController
 {
-    private $usuarioRepo;
-    private $user;
 
     public function __construct()
     {
-        $this->usuarioRepo = new UsuarioRepo();
     }
 
     /**Autentica o usuario no banco
@@ -20,16 +17,20 @@ class AuthController
      */
     public function auth()
     {
+        $usuarioRepo = new UsuarioRepo();
+
         $canLogin = $this->validate($_POST);
         if ($canLogin) {
-            $user = $this->usuarioRepo->auth($_POST);
+            $user = $usuarioRepo->auth($_POST);
 
             if (!empty($user)) {
                 $_SESSION['AUTH'] = $user->getId();
             }
         }
 
-        require dirname(dirname(__FILE__)) . '\Views\pages\index.php';
+        $user = $usuarioRepo->getComplete($user->getId());
+
+        require dirname(dirname(__FILE__)) . '\Views\pages\userDetails.php';
     }
 
     public function login()
