@@ -92,6 +92,32 @@ class AcomodacaoRepo extends BaseRepository
         return $acomodacao;
     }
 
+    public function whereUsuarioId(int $id): ?array
+    {
+        $confortoRepo = new ConfortoRepo();
+
+        $db = Connection::Connect();
+
+        $results = $db->query(
+            $this->search(
+                ' usuario_id ',
+                ' = ',
+                $id
+            )
+        );
+
+        $acomodacaoArray = array();
+        $i = 0;
+
+        while ($linha = $results->fetch(PDO::FETCH_ASSOC)) {
+            $acomodacaoArray[$i] = $this->buildAcomodacao($linha);
+            $acomodacaoArray[$i]->setConfortos($confortoRepo->filterByAcomodacao($acomodacaoArray[$i]->getId()));
+            $i++;
+        }
+
+        return $acomodacaoArray;
+    }
+
     private function buildAcomodacao($queryResult)
     {
         $cidadeRepo = new CidadeRepo();
