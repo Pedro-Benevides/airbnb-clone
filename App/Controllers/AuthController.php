@@ -28,9 +28,7 @@ class AuthController
             }
         }
 
-        $user = $usuarioRepo->getComplete($user->getId());
-
-        require dirname(dirname(__FILE__)) . '\Views\pages\userDetails.php';
+        header('Location:userPage', true, 302);
     }
 
     public function login()
