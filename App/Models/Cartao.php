@@ -53,7 +53,7 @@ class Cartao
      */
     public function getVencimento(): string
     {
-        return $this->vencimento;
+        return date('m/Y', strtotime($this->vencimento));
     }
 
     /**

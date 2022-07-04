@@ -52,29 +52,29 @@ class Locacao
         $this->cancelamento = $cancelamento;
     }
 
-    public function getAcomodacao(): Acomodacao
+    public function getAcomodacao(): ?Acomodacao
     {
         return $this->acomodacao;
     }
 
-    public function getLocatario(): Locatario
+    public function getLocatario(): ?Locatario
     {
         return $this->locatario;
     }
 
-    public function getAnfitriao(): Anfitriao
+    public function getAnfitriao(): ?Anfitriao
     {
         return $this->anfitriao;
     }
 
     public function getDataFim(): string
     {
-        return $this->dataFim;
+        return date('d/m/y', strtotime($this->dataFim));
     }
 
     public function getDataInicio(): string
     {
-        return $this->dataInicio;
+        return date('d/m/y', strtotime($this->dataInicio));
     }
 
     public function getMulta(): float
