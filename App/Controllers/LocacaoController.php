@@ -34,4 +34,22 @@ class LocacaoController
             return dirname(dirname(__FILE__)) . '\Views\pages\error500.php';
         }
     }
+
+    public function checkin()
+    {
+        $locacaoRepo = new LocacaoRepo();
+
+        $locacaoRepo->checkin($_POST);
+
+        header('Location:userPage', true, 302);
+    }
+
+    public function cancel()
+    {
+        $locacaoRepo = new LocacaoRepo();
+
+        $locacaoRepo->cancel($_POST);
+
+        header('Location:userPage', true, 302);
+    }
 }

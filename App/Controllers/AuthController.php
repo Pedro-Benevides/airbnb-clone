@@ -28,7 +28,7 @@ class AuthController
             }
         }
 
-        header('Location:userPage', true, 302);
+        header('Location:home', true, 302);
     }
 
     public function login()

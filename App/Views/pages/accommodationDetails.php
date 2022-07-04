@@ -6,7 +6,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="shortcut icon" href="../img/logo.png">
+  <link rel="shortcut icon" href="https://raw.githubusercontent.com/ookamyabyss/LP-3-FINAL/main/img/logo.png?token=GHSAT0AAAAAABWFLROESLZI47INA47EWVZYYWCKI6Q">
   <title> House Shop </title>
   <meta charset="utf-8" />
   <!-- Link Css -->
@@ -14,11 +14,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel='stylesheet' href='https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'>
   <style type="text/css">
-    <?php require dirname(dirname(__FILE__)) . '\styles\accommodationDetails.php'; ?>
+    <?php require dirname(dirname(__FILE__)) . '\styles\index.php'; ?>
   </style>
-
-
-
 
 </head>
 
@@ -29,7 +26,7 @@
       <div class="container">
         <div class="grid menu">
           <div class="column-xs-8 column-md-6">
-            <a href="../index.html">
+            <a href="home">
               <p id="highlight">House Shop</p>
             </a>
           </div>
@@ -38,13 +35,15 @@
               <?php
               if ($loggedUser) {
               ?>
-                <li class="nav-item"><a href="accommodationList">Buscar acomodações</a></li>
-                <li class="nav-item"><a href="accommodationRegister">Cadastro de acomodações</a></li>
+                <li class="nav-item"><a href="accommodationList">Buscar</a></li>
+                <li class="nav-item"><a href="accommodationForm">Cadastrar acomodação</a></li>
+                <li class="nav-item"><a href="userPage">Meus Dados</a></li>
               <?php
               } else {
               ?>
-                <li class="nav-item"><a href="login">Login</a></li>
+                <li class="nav-item"><a href="accommodationList">Buscar</a></li>
                 <li class="nav-item"><a href="register">Cadastro</a></li>
+                <li class="nav-item"><a href="login">Login</a></li>
               <?php
               }
               ?>
@@ -61,7 +60,7 @@
         <div class="column-xs-12 column-md-7">
           <div class="product-gallery">
             <div class="product-image">
-              <img class="active" src="<?php echo $acomodacao->getImagemFrontal(); ?>">
+              <img class="active" src="<?php echo '..\assets\\' . $acomodacao->getImagemInterior(); ?>">
             </div>
             <ul class="image-list">
               <img src="" alt="description image">
@@ -105,24 +104,30 @@
             </ul>
 
             <?php
-            if ($loggedUser->getCartao()) {
+            if ($loggedUser) {
+              if ($loggedUser->getCartao()) {
             ?>
-              <form action="purchaseDetails" method="post">
-              <?php
-            } else {
-              ?>
-                <form action="cardForm" method="post">
+                <form action="purchaseDetails" method="post">
                 <?php
-              }
+              } else {
                 ?>
-                <p>Check In: <input class="add-to-date" type="date" placeholder="Check IN" name="dataInicio"></p>
+                  <form action="cardForm" method="post">
+                  <?php
+                }
+              } else {
+                  ?>
+                  <form action="login" method="post">
+                  <?php
+                }
+                  ?>
+                  <p>Check In: <input class="add-to-date" type="date" placeholder="Check IN" name="dataInicio"></p>
 
-                <p>Check Out: <input class="add-to-date" type="date" placeholder="Check OUT" name="dataFim"></p>
+                  <p>Check Out: <input class="add-to-date" type="date" placeholder="Check OUT" name="dataFim"></p>
 
-                <input type="hidden" name="accommodation" value="<?php echo $acomodacao->getId(); ?>" />
+                  <input type="hidden" name="accommodation" value="<?php echo $acomodacao->getId(); ?>" />
 
-                <button class="add-to-cart" type="submit">Fazer Reserva</button>
-                </form>
+                  <button class="add-to-cart" type="submit">Fazer Reserva</button>
+                  </form>
           </div>
         </div>
       </div>

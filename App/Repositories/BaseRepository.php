@@ -79,7 +79,7 @@ class BaseRepository
         return $this->select($columns) . $this->from;
     }
 
-    protected function update($setColumns, array $setValue, string $whereColumn, string $whereValue)
+    protected function update($setColumns, $setValue, string $whereColumn, string $whereValue)
     {
         if (is_array($setColumns)) {
             $setColumns = implode(', ', $setColumns);

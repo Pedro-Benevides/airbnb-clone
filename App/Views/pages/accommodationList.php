@@ -6,7 +6,7 @@
 <!-- Sistema de Informação. LP3 -->
 
 <head>
-    <link rel="shortcut icon" href="../img/logo.png">
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/ookamyabyss/LP-3-FINAL/main/img/logo.png?token=GHSAT0AAAAAABWFLROESLZI47INA47EWVZYYWCKI6Q">
     <title> House Shop </title>
     <meta charset="utf-8" />
     <style type="text/css">
@@ -24,15 +24,25 @@
             <div class="container">
                 <div class="grid menu">
                     <div class="column-xs-8 column-md-6">
-                        <a href="../index.html">
+                        <a href="home">
                             <p id="highlight">House Shop</p>
                         </a>
                     </div>
                     <div class="column-xs-4 column-md-6">
                         <ul>
-                            <li class="nav-item"><a href="login">Login</a></li>
-                            <li class="nav-item"><a href="userForm">Cadastro</a></li>
-                            <li class="nav-item"><a href="accommodationForm">Cadastro de acomodações</a></li>
+                            <?php
+                            if (isset($_SESSION) && $_SESSION['AUTH']) {
+                            ?>
+                                <li class="nav-item"><a href="accommodationForm">Cadastro de acomodações</a></li>
+                                <li class="nav-item"><a href="userPage">Meus Dados</a></li>
+                            <?php
+                            } else {
+                            ?>
+                                <li class="nav-item"><a href="register">Cadastro</a></li>
+                                <li class="nav-item"><a href="login">Login</a></li>
+                            <?php
+                            }
+                            ?>
                         </ul>
                     </div>
                 </div>

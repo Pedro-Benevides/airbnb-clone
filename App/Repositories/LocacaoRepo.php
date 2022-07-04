@@ -87,6 +87,37 @@ class LocacaoRepo extends BaseRepository
         return $locacaoArray;
     }
 
+    public function checkin(array $checkin)
+    {
+
+        $db = Connection::Connect();
+        $db->query(
+            $this->update(
+                ' checkin ',
+                [1],
+                'id',
+                $checkin['locacao_id']
+            )
+        )->fetch(PDO::FETCH_ASSOC);
+
+        return $checkin['locacao_id'];
+    }
+
+    public function cancel(array $cancelamento)
+    {
+        $db = Connection::Connect();
+        $db->query(
+            $this->update(
+                ' cancelamento ',
+                [1],
+                'id',
+                $cancelamento['locacao_id']
+            )
+        )->fetch(PDO::FETCH_ASSOC);
+
+        return $cancelamento['locacao_id'];
+    }
+
     private function buildLocacao($queryResult)
     {
         $usuarioRepo = new UsuarioRepo();

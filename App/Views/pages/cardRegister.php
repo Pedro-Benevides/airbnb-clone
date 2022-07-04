@@ -9,7 +9,7 @@ var_dump($_POST);
 <!-- Sistema de Informação. LP3 -->
 
 <head>
-  <link rel="shortcut icon" href="../img/logo.png">
+  <link rel="shortcut icon" href="https://raw.githubusercontent.com/ookamyabyss/LP-3-FINAL/main/img/logo.png?token=GHSAT0AAAAAABWFLROESLZI47INA47EWVZYYWCKI6Q">
   <title>House Shop</title>
 
   <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Inconsolata&amp;family=Open+Sans&amp;display=swap'>

@@ -1,96 +1,85 @@
-<!DOCTYPE html>
-<html>
+<?php require_once 'header.php';
+?>
 
-<!-- UNEB - Universidade do Estado da Bahia -->
-<!-- Alunos- Rafael R C da Cruz, Pedro Victor-->
-<!-- Sistema de Informação. LP3 -->
+<main>
 
-<head>
-    <link rel="shortcut icon" href="img/logo.png">
-    <title>House Shop</title>
-    <meta charset="utf-8" />
-    <link href="http://fonts.cdnfonts.com/css/nexa-bold" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Link Css -->
-    <style type="text/css">
-        <?php require dirname(dirname(__FILE__)) . '\styles\index.php'; ?>
-    </style>
-    <!-- Link Css -->
-</head>
-
-<body>
-
-    <main>
-
-        <!-- details profile -->
-        <section id="section-profile">
-            <div class="container-profile">
-                <div class="profile">
-                    <h1>Detalhes do Usuario</h1>
-                </div>
-
-                <p>Nome: <?php echo $user['nome']; ?></p>
-                <p>CPF: <?php echo $user['cpf']; ?></p>
-                <p>Email: <?php echo $user['email']; ?></p>
-                <p>Telefone: <?php echo $user['telefone']; ?></p>
+    <!-- details profile -->
+    <section id="section-profile">
+        <div class="container-profile">
+            <div class="profile">
+                <h1>Detalhes do Usuario</h1>
             </div>
-        </section>
 
-        <!-- user_card -->
-        <section id="section-card">
-            <div class="container-card">
-                <div class="card">
-                    <h1>Cartão </h1>
-                </div>
+            <p>Nome: <?php echo $user['nome']; ?></p>
+            <p>CPF: <?php echo $user['cpf']; ?></p>
+            <p>Email: <?php echo $user['email']; ?></p>
+            <p>Telefone: <?php echo $user['telefone']; ?></p>
+        </div>
+    </section>
+
+    <!-- user_card -->
+    <section id="section-card">
+        <div class="container-card">
+            <div class="card">
+                <h1>Cartão </h1>
+            </div>
+            <?php
+            if ($user['cartao']) {
+            ?>
+            <?php
+            } else {
+            ?>
+                <a href="cardForm">
+                    <button class="button-card-new button-card-new-block">NEW</button>
+                </a>
+            <?php
+            }
+            ?>
+        </div>
+    </section>
+
+    <!-- cards cards_user -->
+    <section id="cards">
+        <div class="container-cards card-user-card-wrapper">
+            <div class="card-user-card">
                 <?php
                 if ($user['cartao']) {
                 ?>
+                    <h2><?php echo $user['cartao']->getTitular()->getNome(); ?></h2>
+                    <p><?php echo $user['cartao']->getNumero(); ?></p>
+                    <p><?php echo $user['cartao']->getVencimento(); ?></p>
                 <?php
                 } else {
                 ?>
-                    <a href="cardForm">
-                        <button class="button-card-new button-card-new-block">NEW</button>
-                    </a>
+                    <h2>Não há cartão cadastrado</h2>
+
                 <?php
                 }
                 ?>
+                <button class="button-card-delete button-card-delete-block">DELETE</button>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- cards cards_user -->
-        <section id="cards">
-            <div class="container-cards card-user-card-wrapper">
-                <div class="card-user-card">
-                    <?php
-                    if ($user['cartao']) {
-                    ?>
-                        <h2><?php echo $user['cartao']->getTitular()->getNome(); ?></h2>
-                        <p><?php echo $user['cartao']->getNumero(); ?></p>
-                        <p><?php echo $user['cartao']->getVencimento(); ?></p>
-                    <?php
-                    } else {
-                    ?>
-                        <h2>Não há cartão cadastrado</h2>
-
-                    <?php
-                    }
-                    ?>
-                    <button class="button-card-delete button-card-delete-block">DELETE</button>
-                </div>
+    <!-- user_accommodation -->
+    <section id="section-accommodation">
+        <div class="container-accommodation">
+            <div class="accommodation">
+                <h1>Suas acomodações: </h1>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- user_accommodation -->
-        <section id="section-accommodation">
-            <div class="container-accommodation">
-                <div class="accommodation">
-                    <h1>Suas acomodações: </h1>
-                </div>
-            </div>
-        </section>
+    <!-- cards user_accommodation -->
+    <?php
+    if (!$user['acomodacoes'] || count($user['acomodacoes']) < 1) {
+    ?>
+        <div class="card-user-accommodation">
+            <h3>Não há Acomodações cadastradas</h3>
+        </div>
 
-        <!-- cards user_accommodation -->
         <?php
+    } else {
         foreach ($user['acomodacoes'] as $index => $acomodacao) {
         ?>
             <section id="cards">
@@ -112,24 +101,34 @@
                     </div>
                 </div>
             </section>
-        <?php
+    <?php
         }
+    }
 
-        ?>
+    ?>
 
-        <!-- user_location -->
-        <section id="section-location">
-            <div class="container-location">
-                <div class="location">
-                    <h1>Locações em que você é Anfitrião:</h1>
-                </div>
+    <!-- user_location -->
+    <section id="section-location">
+        <div class="container-location">
+            <div class="location">
+                <h1>Locações em que você é Anfitrião:</h1>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- cards user_location -->
-        <section id="cards">
-            <div class="container-location card-user-location-wrapper">
+    <!-- cards user_location -->
+    <section id="cards">
+        <div class="container-location card-user-location-wrapper">
+            <?php
+            if (!$user['locacoesAnfitriao'][0] || count($user['locacoesAnfitriao'][0]) < 1) {
+            ?>
+                <div class="card-user-location">
+                    <h3>Não há Locações desse tipo</h3>
+                </div>
+
                 <?php
+            } else {
+
                 foreach ($user['locacoesAnfitriao'] as $locacaoAnfitriao) {
                     foreach ($locacaoAnfitriao as $locacaoAcomodacao) {
 
@@ -143,30 +142,37 @@
                                                 " em " . $locacaoAcomodacao->getAcomodacao()->getCidade()->getNome(); ?></h2>
                             <p>DATA INICIO: <?php echo $locacaoAcomodacao->getDataInicio() ?></p>
                             <p>DATA FIM: <?php echo $locacaoAcomodacao->getDataInicio() ?></p>
-                            <button class="button-location-checkin button-location-checkin-block">CHECK-IN</button>
-                            <button class="button-location-delete button-location-delete-block">CANCELAMENTO</button>
                         </div>
-                <?php
+            <?php
                     }
                 }
+            }
 
-                ?>
+            ?>
+        </div>
+    </section>
+
+    <!-- user_location -->
+    <section id="section-location">
+        <div class="container-location">
+            <div class="location">
+                <h1>Locações em que você é Locatario:</h1>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- user_location -->
-        <section id="section-location">
-            <div class="container-location">
-                <div class="location">
-                    <h1>Locações em que você é Locatario:</h1>
+    <!-- cards user_location -->
+    <section id="cards">
+        <div class="container-location card-user-location-wrapper">
+            <?php
+            if (!$user['locacoesLocatario'] || count($user['locacoesLocatario']) < 1) {
+            ?>
+                <div class="card-user-location">
+                    <h3>Não há Locações desse tipo</h3>
                 </div>
-            </div>
-        </section>
 
-        <!-- cards user_location -->
-        <section id="cards">
-            <div class="container-location card-user-location-wrapper">
                 <?php
+            } else {
                 foreach ($user['locacoesLocatario'] as $index => $locacaoLocatario) {
                 ?>
 
@@ -178,18 +184,41 @@
                                             " em " . $locacaoLocatario->getAcomodacao()->getCidade()->getNome(); ?></h2>
                         <p>DATA INICIO: <?php echo $locacaoLocatario->getDataInicio() ?></p>
                         <p>DATA FIM: <?php echo $locacaoLocatario->getDataInicio() ?></p>
-                        <button class="button-location-checkin button-location-checkin-block">CHECK-IN</button>
-                        <button class="button-location-delete button-location-delete-block">CANCELAMENTO</button>
+                        <?php
+                        if ($locacaoLocatario->getCheckin()) {
+                        ?>
+                            <p style="color: green" ;>Checkin Efetuado</p>
+                        <?php
+                        }
+                        if ($locacaoLocatario->getCancelamento()) {
+                        ?>
+                            <p style="color: red" ;>Cancelamento Efetuado</p>
+                        <?php
+                        } else if (!$locacaoLocatario->getCheckin() && !$locacaoLocatario->getCancelamento()) {
+                        ?>
+                            <form action="checkinRent" method="post">
+                                <button class="button-location-checkin button-location-checkin-block">CHECK-IN</button>
+                                <input type="hidden" name="locacao_id" value="<?php echo $locacaoLocatario->getId(); ?>">
+
+                            </form>
+                            <form action="cancelRent" method="post">
+                                <button class="button-location-delete button-location-delete-block">CANCELAMENTO</button>
+                                <input type="hidden" name="locacao_id" value="<?php echo $locacaoLocatario->getId(); ?>">
+
+                            </form>
+
+                        <?php
+                        }
+                        ?>
                     </div>
-                <?php
+            <?php
+
                 }
+            }
 
-                ?>
-            </div>
-        </section>
-    </main>
+            ?>
+        </div>
+    </section>
+</main>
 
-
-</body>
-
-</html>
+<?php require_once 'footer.php'; ?>

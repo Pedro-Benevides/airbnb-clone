@@ -158,8 +158,8 @@ class AcomodacaoRepo extends BaseRepository
         $db = Connection::Connect();
 
         $imagemInterior = $_FILES['imagem_interior'];
-        $imagemAdicional = $_FILES['imagem_adicional'];
-        $imagemFrontal = $_FILES['imagem_frontal'];
+        // $imagemAdicional = $_FILES['imagem_adicional'];
+        // $imagemFrontal = $_FILES['imagem_frontal'];
 
         if (
             !empty($imagemInterior)
@@ -169,27 +169,27 @@ class AcomodacaoRepo extends BaseRepository
             !empty($imagemFrontal)
         ) {
             $interiorNomeFinal = 'Interior' . $lastId . '.jpg';
-            $adicionalNomeFinal = 'Adicional' . $lastId . '.jpg';
-            $frontalNomeFinal = 'FrontalF' . $lastId . '.jpg';
+            // $adicionalNomeFinal = 'Adicional' . $lastId . '.jpg';
+            // $frontalNomeFinal = 'FrontalF' . $lastId . '.jpg';
 
             if (
                 move_uploaded_file($imagemInterior['tmp_name'], dirname(dirname(__FILE__)) . '\Views\assets\\' . $interiorNomeFinal)
-                ||
-                move_uploaded_file($imagemFrontal['tmp_name'], dirname(dirname(__FILE__)) . '\Views\assets\\' . $frontalNomeFinal)
-                ||
-                move_uploaded_file($imagemAdicional['tmp_name'], dirname(dirname(__FILE__)) . '\Views\assets\\' . $adicionalNomeFinal)
+                // ||
+                // move_uploaded_file($imagemFrontal['tmp_name'], dirname(dirname(__FILE__)) . '\Views\assets\\' . $frontalNomeFinal)
+                // ||
+                // move_uploaded_file($imagemAdicional['tmp_name'], dirname(dirname(__FILE__)) . '\Views\assets\\' . $adicionalNomeFinal)
             ) {
                 $db->query(
                     $this->update(
                         [
                             'imagem_interior',
-                            'imagem_adicional',
-                            'imagem_frontal'
+                            // 'imagem_adicional',
+                            // 'imagem_frontal'
                         ],
                         [
                             $interiorNomeFinal,
-                            $imagemAdicional,
-                            $imagemFrontal
+                            // $imagemAdicional,
+                            // $imagemFrontal
                         ],
                         'id',
                         $lastId
