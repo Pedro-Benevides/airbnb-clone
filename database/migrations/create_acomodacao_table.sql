@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS `airbnb-clone`.`acomodacao` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `tipo_acomodacao_id` INT NOT NULL,
+    `usuario_id` INT NOT NULL,
+    `cidade_id` INT NOT NULL,
+    `cep` VARCHAR(8) NOT NULL,
+    `rua` VARCHAR(45) NOT NULL,
+    `numero` VARCHAR(3) NOT NULL,
+    `complemento` VARCHAR(255) NULL DEFAULT NULL,
+    `diaria` FLOAT(8, 2) NOT NULL,
+    `imagem_interior` VARCHAR(45) NOT NULL,
+    `imagem_frontal` VARCHAR(45) NOT NULL,
+    `imagem_adicional` VARCHAR(45) NULL DEFAULT NULL,
+    `descricao` VARCHAR(255) NULL DEFAULT NULL,
+    `capacidade` VARCHAR(45) NOT NULL,
+    PRIMARY KEY (`id`),
+    CONSTRAINT `fk_acomodacao_usuario1` FOREIGN KEY (`usuario_id`) REFERENCES `airbnb-clone`.`usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    CONSTRAINT `fk_acomodacao_tipo_acomodacao1` FOREIGN KEY (`tipo_acomodacao_id`) REFERENCES `airbnb-clone`.`tipo_acomodacao` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    CONSTRAINT `fk_acomodacao_cidade1` FOREIGN KEY (`cidade_id`) REFERENCES `airbnb-clone`.`cidade` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE = InnoDB;
