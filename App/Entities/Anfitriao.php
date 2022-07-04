@@ -21,19 +21,17 @@ class Anfitriao extends Usuario
 
     public function __construct(
         Usuario $usuario,
-        array $locacoes = array(),
         array $acomodacoes = array()
     ) {
-        $this->locacoes = $locacoes;
         $this->acomodacoes = $acomodacoes;
 
         parent::__construct(
-            $usuario->nome,
-            $usuario->cpf,
-            $usuario->email,
-            $usuario->senha,
-            $usuario->pais,
-            $usuario->telefone,
+            $usuario->getNome(),
+            $usuario->getCpf(),
+            $usuario->getEmail(),
+            $usuario->getSenha(),
+            $usuario->getPais(),
+            $usuario->getTelefone(),
         );
     }
 
