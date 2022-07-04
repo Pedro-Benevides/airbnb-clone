@@ -29,4 +29,4 @@ Desenvolvido em php 8.1 mais banco de dados MySQL, utilizando o MySQL Workbench 
 
 # Utilizando a Aplicação
 
-Com o servidor Apache iniciado, abra o navegador de sua preferencia e acesse a porta em que o Apache está conectado/nome do subdirétorio criado com os arquivos do projeto. Ex: localhost:3000/airbnb-clone/
+Com o servidor Apache iniciado, abra o navegador de sua preferencia e acesse a porta em que o Apache está conectado/nome do subdirétorio criado com os arquivos do projeto. Ex: localhost:3000/airbnb-clone/home
