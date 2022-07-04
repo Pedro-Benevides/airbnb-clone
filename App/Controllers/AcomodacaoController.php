@@ -65,7 +65,7 @@ class AcomodacaoController
         $acomodacaoRepo = new AcomodacaoRepo();
 
         $acomodacao = $acomodacaoRepo->whereId($_GET['accommodation'], true);
-        $loggedUser = $usuarioRepo->whereId($_SESSION['AUTH'], true);
+        $loggedUser = $usuarioRepo->whereId($_SESSION['AUTH'], 1);
 
         require dirname(dirname(__FILE__)) . '\Views\pages\accommodationDetails.php';
     }
